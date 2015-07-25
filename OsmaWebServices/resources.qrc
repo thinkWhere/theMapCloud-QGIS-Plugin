@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/plugins/OsmaWebServices">
+        <file>icon.png</file>
+        <file>thinkwhere_logo.png</file>
+    </qresource>
+</RCC>

@@ -22,3 +22,11 @@ Then add a new repository with the URL:
 
 Alternatively, the plugin can be installed by cloning the repository and placing it in your QGIS plugin folder (e.g. C:\Users\username\.qgis2\python\plugins on Windows)
 
+## Support
+
+[OSMA Web Services Wiki](http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services)
+
+[thinkWhere Support](http://support.thinkwhere.com/)
+
+
+

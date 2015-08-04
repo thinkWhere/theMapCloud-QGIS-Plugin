@@ -5,7 +5,7 @@
 thinkWhere has developed a plugin to make viewing the OSMA Web Services more efficient when using the open source desktop GIS package, QGIS.
 
 Features:
-- Gazetter search
+- Gazetteer search
 - Easily add WMS/WMTS to the canvas
 - Preview layers
 - Search layers

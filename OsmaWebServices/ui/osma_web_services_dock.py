@@ -211,18 +211,18 @@ class Ui_OsmaDockWidget(object):
         self.addWmtsButton.setText(_translate("OsmaDockWidget", "Add Selected", None))
         self.zoomExtentWmtsBox.setText(_translate("OsmaDockWidget", "Zoom to extent", None))
         self.wmtsSearchLineEdit.setToolTip(_translate("OsmaDockWidget", "Search WMTS Layers...", None))
-        self.wmtsSearchLineEdit.setPlaceholderText(_translate("OsmaDockWidget", "Search WMTS layers...", None))
+        self.wmtsSearchLineEdit.setPlaceholderText(_translate("OsmaDockWidget", "Search WMTS layers_wms...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.wmtsTab), _translate("OsmaDockWidget", "WMTS", None))
         self.addWmsButton.setText(_translate("OsmaDockWidget", "Add Selected", None))
         self.loadLayersWmsButton.setText(_translate("OsmaDockWidget", "Load Layers", None))
         self.zoomExtentWmsBox.setText(_translate("OsmaDockWidget", "Zoom to extent", None))
         self.wmsSearchLineEdit.setToolTip(_translate("OsmaDockWidget", "Search WMS Layers", None))
-        self.wmsSearchLineEdit.setPlaceholderText(_translate("OsmaDockWidget", "Search WMS layers...", None))
+        self.wmsSearchLineEdit.setPlaceholderText(_translate("OsmaDockWidget", "Search WMS layers_wms...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.wmsTab), _translate("OsmaDockWidget", "WMS", None))
         self.titleLabel.setText(_translate("OsmaDockWidget", "Scottish Government OSMA Web Services", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("OsmaDockWidget", "About", None))
 
-import resources_rc
+import OsmaWebServices.resources_rc
 
 if __name__ == "__main__":
     import sys

@@ -68,9 +68,9 @@ class Ui_MultiWmsDialog(object):
         MultiWmsDialog.setWindowTitle(_translate("MultiWmsDialog", "WMS Layer Order", None))
         self.layerOrderPushButton.setText(_translate("MultiWmsDialog", "Done", None))
         self.label_2.setText(_translate("MultiWmsDialog", "Display Name (optional): ", None))
-        self.label.setText(_translate("MultiWmsDialog", "Adjust the order in which the layers are displayed (drag and drop)", None))
+        self.label.setText(_translate("MultiWmsDialog", "Adjust the order in which the layers_wms are displayed (drag and drop)", None))
 
-import resources_rc
+import OsmaWebServices.resources_rc
 
 if __name__ == "__main__":
     import sys

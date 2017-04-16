@@ -3,7 +3,7 @@
 /***************************************************************************
  OsmaWebServicesDialog
                                  A QGIS plugin
- Easy add OSMA WMS and WMTS layers to QGIS
+ Easy add OSMA WMS and WMTS layers_wms to QGIS
                              -------------------
         begin                : 2014-11-10
         git sha              : $Format:%H$
@@ -21,10 +21,11 @@
  ***************************************************************************/
 """
 from PyQt4 import QtGui
-from osma_web_services_dock import Ui_OsmaDockWidget
-from wms_layer_name import Ui_layerNameDialog
-from token_dialog import Ui_TokenDialog
-from multi_wms_order import Ui_MultiWmsDialog
+
+from OsmaWebServices.ui.multi_wms_order import Ui_MultiWmsDialog
+from OsmaWebServices.ui.osma_web_services_dock import Ui_OsmaDockWidget
+from OsmaWebServices.ui.auth_dialog import Ui_AuthDialog
+from OsmaWebServices.ui.wms_layer_name import Ui_layerNameDialog
 
 __author__ = 'matthew.walsh'
 
@@ -45,16 +46,19 @@ class LayerNameDialog(QtGui.QDialog, Ui_layerNameDialog):
         self.ui.setupUi(self)
 
 
-class TokenDialog(QtGui.QDialog, Ui_TokenDialog):
-    # Dialog for user to enter osma token
+class MapcloudAuthDialog(QtGui.QDialog, Ui_AuthDialog):
+    """
+    Dialog for user to enter MapCloud credentials
+    """
+
     def __init__(self):
         QtGui.QDialog.__init__(self)
-        self.ui = Ui_TokenDialog()
+        self.ui = Ui_AuthDialog()
         self.ui.setupUi(self)
 
 
 class MultiWmsDialog(QtGui.QDialog, Ui_MultiWmsDialog):
-    # Dialog for user to enter osma token
+    # Dialog for user to enter osma mc_auth
     def __init__(self):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_MultiWmsDialog()

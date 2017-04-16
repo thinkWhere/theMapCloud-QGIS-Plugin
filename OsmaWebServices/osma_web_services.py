@@ -3,7 +3,7 @@
 /***************************************************************************
  OsmaWebServices
                                  A QGIS plugin
- Easy add OSMA WMS and WMTS layers to QGIS
+ Easy add OSMA WMS and WMTS layers_wms to QGIS
                               -------------------
         begin                : 2014-11-10
         copyright            : (C) 2014 by thinkWhere
@@ -26,13 +26,16 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from osma_web_services_dialog import OsmaWebServicesDock
 from layers import PopulateTree, GetOsmaLayers
-from token import Token
+from mapcloud_authentication import MapCloudAuthentication
+
 
 __author__ = 'matthew.walsh'
 
 
 class OsmaWebServices:
-    """QGIS Plugin Implementation."""
+    """
+    QGIS Plugin Implementation.
+    """
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -69,19 +72,20 @@ class OsmaWebServices:
         # self.toolbar = self.iface.addToolBar(u'OsmaWebServices')
         # self.toolbar.setObjectName(u'OsmaWebServices')
 
-        # Variable for layers and about/info
-        self.layers = None
+        # Variable for layers_wms and about/info
+        self.layers_wms = None
+        self.layers_wmts = None
         self.about = None
         self.caches = None
 
         self.hit_osma = GetOsmaLayers()
 
-        self.token_config = Token(self.iface)
-        self.token_config.check_token()
+        self.mc_auth = MapCloudAuthentication(self.iface)
+        self.mc_auth.validate_auth_credentials()
 
         # Create instance of qtreeview for wms/wmts
-        self.pop_wmts = PopulateTree(self.dock.ui, self.iface, self.token_config, wms=False)
-        self.pop_wms = PopulateTree(self.dock.ui, self.iface, self.token_config, wms=True)
+        self.pop_wmts = PopulateTree(self.dock.ui, self.iface, self.mc_auth, wms=False)
+        self.pop_wms = PopulateTree(self.dock.ui, self.iface, self.mc_auth, wms=True)
 
     def tr(self, message):
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
@@ -157,7 +161,7 @@ class OsmaWebServices:
         # hookup TW logo connection to website
         self.dock.ui.twLogoLabel.mousePressEvent = self.tw_logo_clicked
 
-        # Hookup 'Load layers' buttons to token function
+        # Hookup 'Load layers_wms' buttons to mc_auth function
         self.dock.ui.loadLayersWmsButton.pressed.connect(self.token)
         self.dock.ui.loadLayersWmtsButton.pressed.connect(self.token)
 
@@ -167,13 +171,12 @@ class OsmaWebServices:
 
     def token(self):
         # Runs on first push of 'Load Layers'
+        # Prompt for mc_auth if missing
+        if not self.mc_auth.username:
+            self.mc_auth.prompt_login()
 
-        # Prompt for token if missing
-        if not self.token_config.token:
-            self.token_config.prompt_token()
-
-        # If token is good then change connections and load layers
-        if self.token_config.token:
+        # If mc_auth is good then change connections and load layers_wms
+        if self.mc_auth.username:
             self.load_layers()
             self.populate_about()
 
@@ -212,77 +215,65 @@ class OsmaWebServices:
         self.pop_wms.preview_column(ischecked)
         self.pop_wmts.preview_column(ischecked)
 
-    def hit_osma_ws(self, token):
-        # Hi the GetCapabilities
-        osma = self.hit_osma.get_available_layers(token)
-        self.layers = osma.get('layers')
-        self.about = osma.get('info')
-        self.caches = osma.get('caches')
+    def request_get_capabilities(self, username, password):
+        # Hit the GetCapabilities
+        self.layers_wms, self.layers_wmts, self.about = self.hit_osma.get_available_layers(self.mc_auth.username,
+                                                                                           self.mc_auth.password)
 
     def load_layers(self):
-        # Load layers and populate treeviews
-
-        # Get layers from ws and populate tree
-        if self.layers is None and self.caches is None:
-            self.hit_osma_ws(self.token_config.token)
-        cache_lst = []
-        for cache in self.caches:
-            cache_lst.append(str(cache))
+        """
+        Load layers_wms and populate treeviews
+        :return:
+        """
+        # Get layers_wms from ws and populate tree
+        if self.layers_wms is None:
+            self.request_get_capabilities(self.mc_auth.username, self.mc_auth.password)
+        # cache_lst = []
+        # for cache in self.caches:
+        #     cache_lst.append(str(cache))
         wmts_layers = []
 
         # Check if is WMTS by matching with cache and adds grid to dict
-        for layer in self.layers:
-            source = layer.get('sources')[0]
-            if source in cache_lst:
-                grid = self.caches.get(source).get('grids')[0]
-                layer['grid'] = grid
-                wmts_layers.append(layer)
-            else:
-                pass
-                # Populate trees
-        self.pop_wmts.add_layers(wmts_layers)
-        self.pop_wms.add_layers(self.layers)
+        # for layer in self.layers_wms:
+        #     source = layer.get('sources')[0]
+        #     if source in cache_lst:
+        #         grid = self.caches.get(source).get('grids')[0]
+        #         layer['grid'] = grid
+        #         wmts_layers.append(layer)
+        #     else:
+        #         pass
+        #         # Populate trees
+        # self.pop_wmts.add_layers(wmts_layers)
+        self.pop_wms.add_layers(self.layers_wms)
 
     def populate_about(self):
         # Populate the 'about' tab with info from the GetCapabilities
         if self.about is None:
-            self.hit_osma_ws(self.token_config.token)
-        meta = self.about.get('wms').get('md')
-        abstract = meta.get('abstract')
-        email = meta.get('contact').get('email')
-        person = meta.get('contact').get('person')
-        position = meta.get('contact').get('position')
-        phone = meta.get('contact').get('phone')
-        city = meta.get('contact').get('city')
-        fax = meta.get('contact').get('fax')
-        country = meta.get('contact').get('country')
-        postcode = meta.get('contact').get('postcode')
-        address = meta.get('contact').get('address')
-        access = meta.get('access_constraints')
-        org = meta.get('contact').get('organization')
-        self.dock.ui.abstractLabel.setText(abstract)
-        self.dock.ui.emailLabel.setText("email: " + email)
-        self.dock.ui.personLabel.setText("Contact: " + person)
-        self.dock.ui.positionLabel.setText("Position: " + position)
-        self.dock.ui.phoneLabel.setText("Phone:" + phone)
-        self.dock.ui.cityLabel.setText(city)
-        self.dock.ui.faxLabel.setText("Fax: " + fax)
-        self.dock.ui.countryLabel.setText(country)
-        self.dock.ui.postcodeLabel.setText(postcode)
-        self.dock.ui.addrLabel.setText("Address: " + address)
-        self.dock.ui.accessLabel.setText("Access Constraint: " + access)
-        self.dock.ui.orgLabel.setText("organization: " + org)
+            self.request_get_capabilities(self.mc_auth.username, self.mc_auth.password)
+
+        self.dock.ui.abstractLabel.setText(self.about.get('abstract'))
+        self.dock.ui.emailLabel.setText("email: " + self.about.get('email'))
+        self.dock.ui.personLabel.setText("Contact: " + self.about.get('person'))
+        self.dock.ui.positionLabel.setText("Position: " + self.about.get('position'))
+        self.dock.ui.phoneLabel.setText("Phone:" + self.about.get('phone'))
+        self.dock.ui.cityLabel.setText(self.about.get('city'))
+        # self.dock.ui.faxLabel.setText("Fax: " + self.about.get('fax'))
+        self.dock.ui.countryLabel.setText(self.about.get('country'))
+        self.dock.ui.postcodeLabel.setText(self.about.get('postcode'))
+        self.dock.ui.addrLabel.setText("Address: " + self.about.get('address'))
+        self.dock.ui.accessLabel.setText("Access Constraint: " + self.about.get('access'))
+        self.dock.ui.orgLabel.setText("organization: " + self.about.get('org'))
 
     def clear_token(self):
         # Reset plugin to initial state
-        self.token_config.clear_token()
+        self.mc_auth.clear_auth_credentials()
         self.pop_wms.clear_tree()
         self.pop_wmts.clear_tree()
-        self.layers = None
+        self.layers_wms = None
         self.about = None
         self.caches = None
 
-        # Break current 'Load Layers' connections ad re-connect to token function
+        # Break current 'Load Layers' connections ad re-connect to mc_auth function
         self.dock.ui.loadLayersWmsButton.pressed.disconnect()
         self.dock.ui.loadLayersWmsButton.pressed.connect(self.token)
         self.dock.ui.loadLayersWmtsButton.pressed.connect(self.token)

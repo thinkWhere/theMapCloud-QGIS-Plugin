@@ -141,7 +141,7 @@ class GetOsmaLayers:
 
             # Create layer dict entry
             title = layer.find('./{http://www.opengis.net/ows/1.1}Title').text
-            grid = layer.find('./{http://www.opengis.net/wmts/1.0}TileMatrixSetLink').text
+            grid = layer.find('./{http://www.opengis.net/wmts/1.0}TileMatrixSetLink/{http://www.opengis.net/wmts/1.0}TileMatrixSet').text
             name = layer.find('./{http://www.opengis.net/ows/1.1}Identifier').text
 
             layer_metadata = {'title': title,
@@ -348,8 +348,7 @@ class PopulateTree:
         if self.wms:
             self.add_layer.add_wms(data, username, password)
         else:
-            # TODO: Pass PW
-            self.add_layer.add_wmts(data, username)
+            self.add_layer.add_wmts(data, username, password)
 
     def add_layers(self, layers):
 
@@ -507,7 +506,6 @@ class AddToCanvas:
                 url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png" \
                       "&layers={0}&styles=default&url={1}/maps/wms&password={2}" \
                       "&username={3}".format(layer, BASE_MAPCLOUD_URL,password, username)
-                print(url)
             else:
                 # Adds multiple layers_wms to canvas as single layer
                 title = self.title_and_order(data)
@@ -526,19 +524,20 @@ class AddToCanvas:
             self.iface.addRasterLayer(url, title, "wms")
             self.zoom_to_extent()
 
-    def add_wmts(self, data, token):
+    def add_wmts(self, data, username, password):
         # Add wmts layer to canvas
         self.reset()
         for layer_t in data:
             title = str(layer_t[0])
             layer = str(layer_t[1][0])
             grid = str(layer_t[1][1])
+
             if "grey" in layer.lower():
                 title += " Greyscale"
-            url = r"crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers_wms=" + layer + \
-                  r"&styles=default&tileMatrixSet=" + grid + "&url=http://wms.locationcentre.co.uk/services/" + \
-                  token + r"/wmts/1.0.0/WMTSCapabilities.xml"
-            print url
+            url = r"crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers={0}&" \
+                  r"styles=default&tileMatrixSet={4}&url={1}/maps/wmts/1.0.0/WMTSCapabilities.xml&" \
+                  r"password={2}&username={3}".format(layer, BASE_MAPCLOUD_URL, password, username, grid)
+
             self.iface.addRasterLayer(url, title, "wms")
         self.zoom_to_extent()
 

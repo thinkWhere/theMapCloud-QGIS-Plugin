@@ -147,7 +147,7 @@ class Ui_OsmaDockWidget(object):
         self.twLogoLabel.setSizePolicy(sizePolicy)
         self.twLogoLabel.setMaximumSize(QtCore.QSize(10777215, 10777215))
         self.twLogoLabel.setText(_fromUtf8(""))
-        self.twLogoLabel.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/OsmaWebServices/resources/thinkwhere_logo.png")))
+        self.twLogoLabel.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/TheMapCloudWebServices/resources/thinkwhere_logo.png")))
         self.twLogoLabel.setScaledContents(False)
         self.twLogoLabel.setOpenExternalLinks(True)
         self.twLogoLabel.setObjectName(_fromUtf8("twLogoLabel"))

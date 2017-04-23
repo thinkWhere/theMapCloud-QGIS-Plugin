@@ -22,10 +22,10 @@
 """
 from PyQt4 import QtGui
 
-from OsmaWebServices.ui.multi_wms_order import Ui_MultiWmsDialog
-from OsmaWebServices.ui.osma_web_services_dock import Ui_OsmaDockWidget
-from OsmaWebServices.ui.auth_dialog import Ui_AuthDialog
-from OsmaWebServices.ui.wms_layer_name import Ui_layerNameDialog
+from TheMapCloudWebServices.ui.multi_wms_order import Ui_MultiWmsDialog
+from TheMapCloudWebServices.ui.osma_web_services_dock import Ui_OsmaDockWidget
+from TheMapCloudWebServices.ui.auth_dialog import Ui_AuthDialog
+from TheMapCloudWebServices.ui.wms_layer_name import Ui_layerNameDialog
 
 __author__ = 'matthew.walsh'
 

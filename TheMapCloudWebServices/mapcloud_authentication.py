@@ -34,8 +34,8 @@ class MapCloudAuthentication:
         """
         try:
             if not username or not password:
-                username = self.registry.value("OsmaWebServices/username")
-                password = self.registry.value("OsmaWebServices/password")
+                username = self.registry.value("TheMapCloudWebServices/username")
+                password = self.registry.value("TheMapCloudWebServices/password")
 
             get_cap_url = '{}/maps/wms?REQUEST=GetCapabilities'.format(BASE_MAPCLOUD_URL)
             _, status_code = make_mapcloud_request(get_cap_url, username, password)
@@ -90,8 +90,8 @@ class MapCloudAuthentication:
         """
         Store the auth credentials in the registry.
         """
-        username_entry = "OsmaWebServices/username"
-        password_entry = "OsmaWebServices/password"
+        username_entry = "TheMapCloudWebServices/username"
+        password_entry = "TheMapCloudWebServices/password"
         self.registry.setValue(username_entry, self.username)
         self.registry.setValue(password_entry, self.password)
 
@@ -103,7 +103,7 @@ class MapCloudAuthentication:
         self.username = None
         self.password = None
 
-        username_entry = "OsmaWebServices/username"
-        password_entry = "OsmaWebServices/username"
+        username_entry = "TheMapCloudWebServices/username"
+        password_entry = "TheMapCloudWebServices/username"
         self.registry.remove(username_entry)
         self.registry.remove(password_entry)

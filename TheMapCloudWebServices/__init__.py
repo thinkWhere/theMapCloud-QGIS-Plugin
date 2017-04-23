@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- OsmaWebServices
+ TheMapCloudWebServices
                                  A QGIS plugin
  Easy add OSMA WMS and WMTS layers_wms to QGIS
                              -------------------
@@ -25,11 +25,11 @@
 
 # noinspection PyPep8Naming
 def classFactory(iface):  # pylint: disable=invalid-name
-    """Load OsmaWebServices class from file OsmaWebServices.
+    """Load TheMapCloudWebServices class from file TheMapCloudWebServices.
 
     :param iface: A QGIS interface instance.
     :type iface: QgsInterface
     """
     #
-    from .osma_web_services import OsmaWebServices
-    return OsmaWebServices(iface)
+    from .osma_web_services import TheMapCloudWebServices
+    return TheMapCloudWebServices(iface)

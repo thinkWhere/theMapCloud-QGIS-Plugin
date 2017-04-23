@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- OsmaWebServices
+ TheMapCloudWebServices
                                  A QGIS plugin
  Easy add OSMA WMS and WMTS layers_wms to QGIS
                               -------------------
@@ -33,7 +33,7 @@ from config_parser import parse_config_from_file
 __author__ = 'matthew.walsh'
 
 
-class OsmaWebServices:
+class TheMapCloudWebServices:
     """
     QGIS Plugin Implementation.
     """
@@ -71,8 +71,8 @@ class OsmaWebServices:
         # Declare instance attributes
         self.actions = []
         self.menu = self.tr(u'&{}'.format(self.plugin_config.get('title')))
-        # self.toolbar = self.iface.addToolBar(u'OsmaWebServices')
-        # self.toolbar.setObjectName(u'OsmaWebServices')
+        # self.toolbar = self.iface.addToolBar(u'TheMapCloudWebServices')
+        # self.toolbar.setObjectName(u'TheMapCloudWebServices')
 
         # Variable for layers_wms and about/info
         self.layers_wms = None
@@ -136,7 +136,7 @@ class OsmaWebServices:
         self.pop_wmts.preview_column(False)
         self.pop_wms.preview_column(False)
 
-        icon_path = ':/plugins/OsmaWebServices/resources/icon.png'
+        icon_path = ':/plugins/TheMapCloudWebServices/resources/icon.png'
         self.add_action(
             icon_path,
             text=self.tr(u'{}'.format(self.plugin_config.get('title'))),

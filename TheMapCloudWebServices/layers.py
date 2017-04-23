@@ -397,10 +397,10 @@ class PopulateTree:
             self.treeview.showColumn(1)
             self.treeview.setColumnWidth(0, 210)
             self.treeview.setColumnWidth(1, 80)
-            QSettings().setValue("OsmaWebServices/Preview", "True")
+            QSettings().setValue("TheMapCloudWebServices/Preview", "True")
         else:
             self.treeview.hideColumn(1)
-            QSettings().setValue("OsmaWebServices/Preview", "False")
+            QSettings().setValue("TheMapCloudWebServices/Preview", "False")
 
     def clear_tree(self):
         pass

@@ -228,22 +228,8 @@ class OsmaWebServices:
         # Get layers_wms from ws and populate tree
         if self.layers_wms is None:
             self.request_get_capabilities(self.mc_auth.username, self.mc_auth.password)
-        # cache_lst = []
-        # for cache in self.caches:
-        #     cache_lst.append(str(cache))
-        wmts_layers = []
 
-        # Check if is WMTS by matching with cache and adds grid to dict
-        # for layer in self.layers_wms:
-        #     source = layer.get('sources')[0]
-        #     if source in cache_lst:
-        #         grid = self.caches.get(source).get('grids')[0]
-        #         layer['grid'] = grid
-        #         wmts_layers.append(layer)
-        #     else:
-        #         pass
-        #         # Populate trees
-        # self.pop_wmts.add_layers(wmts_layers)
+        self.pop_wmts.add_layers(self.layers_wmts)
         self.pop_wms.add_layers(self.layers_wms)
 
     def populate_about(self):

@@ -66,7 +66,7 @@ class GetOsmaLayers:
         Extract the WMS layers from the WMS
         GetCapabilities XML.
         :param xml_root: XML Element of GetCapabilities
-        :return: dict of layers
+        :return: list of layer dicts
         """
         layers = []
 
@@ -125,13 +125,39 @@ class GetOsmaLayers:
         Extract the WMTS layers from the WMTS
         GetCapabilities XML.
         :param xml_root: XML Element of GetCapabilities
-        :return: dict of layers
+        :return: list of layer dicts
         """
-        pass
+        layers = []
+        # ns = {
+        #     'ows': 'http://www.opengis.net/ows/1.1',
+        #     'xmlns': 'http://www.opengis.net/wmts/1.0',
+        # }
+        # for prefix, uri in ns.items():
+        #     xml_root.register_namespace(prefix, uri)
+        all_layers = xml_root.findall('./{http://www.opengis.net/wmts/1.0}Contents/'
+                                      '{http://www.opengis.net/wmts/1.0}Layer')
+
+        for layer in all_layers:
+
+            # Create layer dict entry
+            title = layer.find('./{http://www.opengis.net/ows/1.1}Title').text
+            grid = layer.find('./{http://www.opengis.net/wmts/1.0}TileMatrixSetLink').text
+            name = layer.find('./{http://www.opengis.net/ows/1.1}Identifier').text
+
+            layer_metadata = {'title': title,
+                              'name': name,
+                              'grid': grid,
+                              'min_scale': None,
+                              'max_scale': None}
+            layers.append(layer_metadata)
+
+        return layers
 
 
 class PreviewButton(QStyledItemDelegate):
-    """Custom delegate to add a push button to a row"""
+    """
+    Custom delegate to add a push button to a
+    """
     buttonClicked = pyqtSignal(QModelIndex)
 
     def __init__(self, sourcemodel, proxymodel, iface, parent=None):

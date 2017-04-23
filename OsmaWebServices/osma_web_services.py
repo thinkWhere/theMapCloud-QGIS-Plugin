@@ -40,7 +40,6 @@ class OsmaWebServices:
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
-        self.preview_btn = None
         self.wiki_btn = None
         self.reset_btn = None
 
@@ -127,7 +126,13 @@ class OsmaWebServices:
         return action
 
     def initGui(self):
-        """Create the menu entries and toolbar icons inside the QGIS GUI."""
+        """
+        Create the menu entries and toolbar icons inside the QGIS GUI.
+        """
+        # DISABLE THE PREVIEW FUNCTIONALITY
+        self.pop_wmts.preview_column(False)
+        self.pop_wms.preview_column(False)
+
         icon_path = ':/plugins/OsmaWebServices/icon.png'
         self.add_action(
             icon_path,
@@ -144,19 +149,6 @@ class OsmaWebServices:
         self.reset_btn = QAction("Reset Plugin", self.iface.mainWindow())
         QObject.connect(self.reset_btn, SIGNAL("triggered()"), self.clear_token)
         self.iface.addPluginToWebMenu(u"OSMA Web Services", self.reset_btn)
-
-        # Adds 'Show preview' to the menu
-        self.preview_btn = QAction("Preview enabled", self.iface.mainWindow(), checkable=True)
-        QObject.connect(self.preview_btn, SIGNAL("triggered()"),
-                        lambda: self.change_preview(self.preview_btn.isChecked()))
-        self.iface.addPluginToWebMenu(u"OSMA Web Services", self.preview_btn)
-
-        # Get preview preference from registry and set column visibility
-        if QSettings().value("OsmaWebServices/Preview") == "False":
-            self.change_preview(False)
-        else:
-            self.change_preview(True)
-            self.preview_btn.setChecked(True)
 
         # hookup TW logo connection to website
         self.dock.ui.twLogoLabel.mousePressEvent = self.tw_logo_clicked
@@ -197,7 +189,6 @@ class OsmaWebServices:
             self.iface.removeDockWidget(self.dock)
             self.iface.removePluginWebMenu(u"OSMA Web Services", self.reset_btn)
             self.iface.removePluginWebMenu(u"OSMA Web Services", self.wiki_btn)
-            self.iface.removePluginWebMenu(u"OSMA Web Services", self.preview_btn)
 
     def run(self):
         # Display docked window
@@ -210,10 +201,6 @@ class OsmaWebServices:
     def wiki_clicked(self):
         # Open wiki in web browser
         webbrowser.open('http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services')
-
-    def change_preview(self, ischecked):
-        self.pop_wms.preview_column(ischecked)
-        self.pop_wmts.preview_column(ischecked)
 
     def request_get_capabilities(self, username, password):
         # Hit the GetCapabilities

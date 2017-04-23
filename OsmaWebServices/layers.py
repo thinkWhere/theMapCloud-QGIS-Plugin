@@ -128,12 +128,7 @@ class GetOsmaLayers:
         :return: list of layer dicts
         """
         layers = []
-        # ns = {
-        #     'ows': 'http://www.opengis.net/ows/1.1',
-        #     'xmlns': 'http://www.opengis.net/wmts/1.0',
-        # }
-        # for prefix, uri in ns.items():
-        #     xml_root.register_namespace(prefix, uri)
+
         all_layers = xml_root.findall('./{http://www.opengis.net/wmts/1.0}Contents/'
                                       '{http://www.opengis.net/wmts/1.0}Layer')
 
@@ -141,7 +136,8 @@ class GetOsmaLayers:
 
             # Create layer dict entry
             title = layer.find('./{http://www.opengis.net/ows/1.1}Title').text
-            grid = layer.find('./{http://www.opengis.net/wmts/1.0}TileMatrixSetLink/{http://www.opengis.net/wmts/1.0}TileMatrixSet').text
+            grid = layer.find('./{http://www.opengis.net/wmts/1.0}TileMatrixSetLink/'
+                              '{http://www.opengis.net/wmts/1.0}TileMatrixSet').text
             name = layer.find('./{http://www.opengis.net/ows/1.1}Identifier').text
 
             layer_metadata = {'title': title,

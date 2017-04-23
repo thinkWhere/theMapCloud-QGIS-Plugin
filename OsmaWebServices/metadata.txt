@@ -27,7 +27,7 @@ tags=wms, wmts, osma, scotland, thinkwhere
 category=Web
 homepage=http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services
 tracker=
-repository=https://github.com/thinkWhere/OsmaWebServices-QGIS-Plugin
+repository=https://github.com/thinkWhere/theMapCloud-QGIS-Plugin
 icon=icon.png
 # experimental flag
 experimental=False

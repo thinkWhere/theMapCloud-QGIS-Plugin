@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+from ..config_parser import parse_config_from_file
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -23,7 +24,10 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_AuthDialog(object):
+
     def setupUi(self, AuthDialog):
+
+        self.config = parse_config_from_file()
         AuthDialog.setObjectName(_fromUtf8("AuthDialog"))
         AuthDialog.resize(300, 147)
         AuthDialog.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -74,7 +78,7 @@ class Ui_AuthDialog(object):
         AuthDialog.setTabOrder(self.loginPushButton, self.cancelPushButton)
 
     def retranslateUi(self, AuthDialog):
-        AuthDialog.setWindowTitle(_translate("AuthDialog", "OSMA Web Services Login", None))
+        AuthDialog.setWindowTitle(_translate("AuthDialog", "{} Login".format(self.config.get('title')), None))
         self.usernameLabel.setText(_translate("AuthDialog", "Username:", None))
         self.passwordLabel.setText(_translate("AuthDialog", "Password:", None))
         self.cancelPushButton.setText(_translate("AuthDialog", "Cancel", None))

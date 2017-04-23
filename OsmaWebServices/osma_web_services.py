@@ -27,6 +27,7 @@ from PyQt4.QtGui import *
 from osma_web_services_dialog import OsmaWebServicesDock
 from layers import PopulateTree, GetOsmaLayers
 from mapcloud_authentication import MapCloudAuthentication
+from config_parser import parse_config_from_file
 
 
 __author__ = 'matthew.walsh'
@@ -43,6 +44,8 @@ class OsmaWebServices:
         self.wiki_btn = None
         self.reset_btn = None
 
+        self.plugin_config = parse_config_from_file()
+
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
@@ -50,7 +53,7 @@ class OsmaWebServices:
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'OsmaWebServices_{}.qm'.format(locale))
+            '{}_{}.qm'.format(self.plugin_config.get('name'), locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -67,7 +70,7 @@ class OsmaWebServices:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&OSMA Web Services')
+        self.menu = self.tr(u'&{}'.format(self.plugin_config.get('title')))
         # self.toolbar = self.iface.addToolBar(u'OsmaWebServices')
         # self.toolbar.setObjectName(u'OsmaWebServices')
 
@@ -88,7 +91,7 @@ class OsmaWebServices:
 
     def tr(self, message):
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('OsmaWebServices', message)
+        return QCoreApplication.translate(self.plugin_config.get('name'), message)
 
     def add_action(
             self,
@@ -136,19 +139,19 @@ class OsmaWebServices:
         icon_path = ':/plugins/OsmaWebServices/resources/icon.png'
         self.add_action(
             icon_path,
-            text=self.tr(u'OSMA Web Services'),
+            text=self.tr(u'{}'.format(self.plugin_config.get('title'))),
             callback=self.run,
             parent=self.iface.mainWindow())
 
         # Adds 'OSMA Wiki' to the menu
         self.wiki_btn = QAction("Help Wiki", self.iface.mainWindow())
         QObject.connect(self.wiki_btn, SIGNAL("triggered()"), self.wiki_clicked)
-        self.iface.addPluginToWebMenu(u"OSMA Web Services", self.wiki_btn)
+        self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.wiki_btn)
 
         # Adds 'Reset plugin' to the menu
         self.reset_btn = QAction("Reset Plugin", self.iface.mainWindow())
         QObject.connect(self.reset_btn, SIGNAL("triggered()"), self.clear_token)
-        self.iface.addPluginToWebMenu(u"OSMA Web Services", self.reset_btn)
+        self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.reset_btn)
 
         # hookup TW logo connection to website
         self.dock.ui.twLogoLabel.mousePressEvent = self.tw_logo_clicked
@@ -183,12 +186,12 @@ class OsmaWebServices:
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginWebMenu(
-                self.tr(u'OSMA Web Services'),
+                self.tr(u'{}'.format(self.plugin_config.get('title'))),
                 action)
             self.iface.removeToolBarIcon(action)
             self.iface.removeDockWidget(self.dock)
-            self.iface.removePluginWebMenu(u"OSMA Web Services", self.reset_btn)
-            self.iface.removePluginWebMenu(u"OSMA Web Services", self.wiki_btn)
+            self.iface.removePluginWebMenu(u"{}".format(self.plugin_config.get('title')), self.reset_btn)
+            self.iface.removePluginWebMenu(u"{}".format(self.plugin_config.get('title')), self.wiki_btn)
 
     def run(self):
         # Display docked window
@@ -200,7 +203,7 @@ class OsmaWebServices:
 
     def wiki_clicked(self):
         # Open wiki in web browser
-        webbrowser.open('http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services')
+        webbrowser.open(self.plugin_config.get('help_url'))
 
     def request_get_capabilities(self, username, password):
         # Hit the GetCapabilities
@@ -252,4 +255,5 @@ class OsmaWebServices:
         self.dock.ui.loadLayersWmtsButton.pressed.connect(self.token)
 
         # Info box
-        QMessageBox.information(self.iface.mainWindow(), "Reset Successful", "OSMA Web Services Plugin has been reset")
+        QMessageBox.information(self.iface.mainWindow(),
+                                "Reset Successful", "{} Plugin has been reset".format(self.plugin_config.get('title')))

@@ -144,7 +144,7 @@ class Ui_OsmaDockWidget(object):
         self.twLogoLabel.setSizePolicy(sizePolicy)
         self.twLogoLabel.setMaximumSize(QtCore.QSize(10777215, 10777215))
         self.twLogoLabel.setText(_fromUtf8(""))
-        self.twLogoLabel.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/OsmaWebServices/thinkwhere_logo.png")))
+        self.twLogoLabel.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/OsmaWebServices/resources/thinkwhere_logo.png")))
         self.twLogoLabel.setScaledContents(False)
         self.twLogoLabel.setOpenExternalLinks(True)
         self.twLogoLabel.setObjectName(_fromUtf8("twLogoLabel"))
@@ -222,7 +222,6 @@ class Ui_OsmaDockWidget(object):
         self.titleLabel.setText(_translate("OsmaDockWidget", "Scottish Government OSMA Web Services", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("OsmaDockWidget", "About", None))
 
-import OsmaWebServices.resources_rc
 
 if __name__ == "__main__":
     import sys

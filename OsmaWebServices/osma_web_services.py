@@ -133,7 +133,7 @@ class OsmaWebServices:
         self.pop_wmts.preview_column(False)
         self.pop_wms.preview_column(False)
 
-        icon_path = ':/plugins/OsmaWebServices/icon.png'
+        icon_path = ':/plugins/OsmaWebServices/resources/icon.png'
         self.add_action(
             icon_path,
             text=self.tr(u'OSMA Web Services'),

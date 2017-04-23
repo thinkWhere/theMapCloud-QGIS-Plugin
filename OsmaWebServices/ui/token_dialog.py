@@ -58,7 +58,6 @@ class Ui_TokenDialog(object):
         self.tokenLabel.setText(_translate("TokenDialog", "Please enter OSMA organisation mc_auth:", None))
         self.goTokenButton.setText(_translate("TokenDialog", "Go", None))
 
-import OsmaWebServices.resources_rc
 
 if __name__ == "__main__":
     import sys

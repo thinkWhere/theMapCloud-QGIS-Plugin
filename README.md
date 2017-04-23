@@ -1,8 +1,8 @@
-# OsmaWebServices-QGIS-Plugin
+# theMapCloud-QGIS-Plugin
 
 ## About 
 
-thinkWhere has developed a plugin to make viewing the OSMA Web Services more efficient when using the open source desktop GIS package, QGIS.
+thinkWhere has developed a plugin to make viewing theMapCloud web services more efficient when using the open source desktop GIS package, QGIS.
 
 Features:
 - Gazetteer search

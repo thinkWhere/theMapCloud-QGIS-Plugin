@@ -3,7 +3,7 @@ from PyQt4.QtCore import QSettings
 from PyQt4.QtGui import QMessageBox
 
 from osma_web_services_dialog import MapcloudAuthDialog
-from layers import BASE_MAPCLOUD_URL, make_mapcloud_request
+from layers import BASE_API_URL, make_mapcloud_request
 
 __author__ = 'matthew.walsh'
 
@@ -37,7 +37,7 @@ class MapCloudAuthentication:
                 username = self.registry.value("TheMapCloudWebServices/username")
                 password = self.registry.value("TheMapCloudWebServices/password")
 
-            get_cap_url = '{}/maps/wms?REQUEST=GetCapabilities'.format(BASE_MAPCLOUD_URL)
+            get_cap_url = '{}/maps/wms?REQUEST=GetCapabilities'.format(BASE_API_URL)
             _, status_code = make_mapcloud_request(get_cap_url, username, password)
 
             if status_code == 200:

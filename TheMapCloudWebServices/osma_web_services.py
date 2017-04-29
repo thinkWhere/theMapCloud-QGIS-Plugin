@@ -28,6 +28,7 @@ from osma_web_services_dialog import OsmaWebServicesDock
 from layers import PopulateTree, GetOsmaLayers
 from mapcloud_authentication import MapCloudAuthentication
 from config_parser import parse_config_from_file
+from ConfigParser import NoOptionError
 
 
 __author__ = 'matthew.walsh'
@@ -44,7 +45,13 @@ class TheMapCloudWebServices:
         self.wiki_btn = None
         self.reset_btn = None
 
-        self.plugin_config = parse_config_from_file()
+        try:
+            self.plugin_config = parse_config_from_file()
+        except NoOptionError:
+            print "invalid config file!"
+            QMessageBox.information(self.iface.mainWindow(),
+                                    "Configuration failure",
+                                    "Plugin config file is invalid")
 
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)

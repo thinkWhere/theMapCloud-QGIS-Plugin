@@ -6,10 +6,25 @@ import xml.etree.ElementTree as ElmTree
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from osma_web_services_dialog import MultiWmsDialog
+from config_parser import parse_config_from_file
+from ConfigParser import  NoOptionError
 
 __author__ = 'matthew.walsh'
 
-BASE_MAPCLOUD_URL = 'https://api.themapcloud.com'
+
+def get_base_api_url():
+    """
+    Get the base API url from the plugin
+    configuration file.
+    :return: Base API URL str
+    """
+    config = parse_config_from_file()
+    url = config.get('api_url')
+    return url
+
+
+# Set the base API URL for the plugin to hit
+BASE_API_URL = get_base_api_url()
 
 
 def make_mapcloud_request(url, username, password):
@@ -39,7 +54,7 @@ class GetOsmaLayers:
         :return: wms layers dict, wmts layers dict, metadata dict
         """
 
-        base_mc_url = BASE_MAPCLOUD_URL + '/maps'
+        base_mc_url = BASE_API_URL + '/maps'
         wms_getcaps = '/wms?REQUEST=GetCapabilities'
         wmts_getcaps = '/wmts/1.0.0/WMTSCapabilities.xml'
 
@@ -500,7 +515,7 @@ class AddToCanvas:
                     title += "Greyscale"
                 url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png" \
                       "&layers={0}&styles=default&url={1}/maps/wms&password={2}" \
-                      "&username={3}".format(layer, BASE_MAPCLOUD_URL,password, username)
+                      "&username={3}".format(layer, BASE_API_URL, password, username)
             else:
                 # Adds multiple layers_wms to canvas as single layer
                 title = self.title_and_order(data)
@@ -515,7 +530,7 @@ class AddToCanvas:
                 layers_clean = "".join(layers)[:-8]
                 url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png" \
                       "&layers={0}{1}&url={2}/maps/wms&password={3}" \
-                      "&username={4}".format(layers_clean, styles, BASE_MAPCLOUD_URL, password, username)
+                      "&username={4}".format(layers_clean, styles, BASE_API_URL, password, username)
             self.iface.addRasterLayer(url, title, "wms")
             self.zoom_to_extent()
 
@@ -531,7 +546,7 @@ class AddToCanvas:
                 title += " Greyscale"
             url = r"crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers={0}&" \
                   r"styles=default&tileMatrixSet={4}&url={1}/maps/wmts/1.0.0/WMTSCapabilities.xml&" \
-                  r"password={2}&username={3}".format(layer, BASE_MAPCLOUD_URL, password, username, grid)
+                  r"password={2}&username={3}".format(layer, BASE_API_URL, password, username, grid)
 
             self.iface.addRasterLayer(url, title, "wms")
         self.zoom_to_extent()

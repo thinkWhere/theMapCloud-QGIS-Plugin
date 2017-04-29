@@ -14,10 +14,12 @@ def parse_config_from_file():
     name = config.get('plugin_configuration', 'name')
     title = config.get('plugin_configuration', 'title')
     help_url = config.get('plugin_configuration', 'help_url')
+    api_url = config.get('plugin_configuration', 'api_url')
 
     config_dict = {
         'name': name,
         'title': title,
-        'help_url': help_url
+        'help_url': help_url,
+        'api_url': api_url
     }
     return config_dict

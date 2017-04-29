@@ -476,7 +476,6 @@ class AddToCanvas:
         # Opens dlg for user to input layer name, creates generic if not provided
         self.order_layers.ui.layerOrderListWidget.clear()
         for d in data:
-            print d
             item = QListWidgetItem()
             item.setText(d[0])
             item.setData(Qt.UserRole, d[1])
@@ -486,7 +485,7 @@ class AddToCanvas:
             return self.layer_n
         else:
             self.multi_l_count += 1
-            title = "MultipleWMSLayer_" + str(self.multi_l_count)
+            title = "MultiWMSLayer_" + str(self.multi_l_count)
             return title
 
     def add_wms(self, data, username, password):
@@ -510,12 +509,12 @@ class AddToCanvas:
                 if self.layers_ordered:
                     data = self.layers_ordered
                 for layer_t in data:
-                    layer = str(layer_t[1]) + "&layers_wms="
+                    layer = str(layer_t[1]) + "&layers="
                     layers.append(layer)
                     styles += "&styles="
                 layers_clean = "".join(layers)[:-8]
                 url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png" \
-                      "&layers_wms={0}{1}&url={2}/maps/wms&password={3}" \
+                      "&layers={0}{1}&url={2}/maps/wms&password={3}" \
                       "&username={4}".format(layers_clean, styles, BASE_MAPCLOUD_URL, password, username)
             self.iface.addRasterLayer(url, title, "wms")
             self.zoom_to_extent()

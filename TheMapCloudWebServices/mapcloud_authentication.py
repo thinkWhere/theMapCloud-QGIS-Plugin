@@ -21,9 +21,13 @@ class MapCloudAuthentication:
         # Create instance of mc_auth dlg
         self.mc_auth_dlg = MapcloudAuthDialog()
         self.mc_auth_dlg.ui.loginPushButton.clicked.connect(self.check_auth_credentials)
+        self.mc_auth_dlg.ui.cancelPushButton.clicked.connect(self.cancel_login)
 
         # Windows registry access
         self.registry = QSettings()
+
+    def cancel_login(self):
+        self.mc_auth_dlg.close()
 
     def validate_auth_credentials(self, username=None, password=None):
         """

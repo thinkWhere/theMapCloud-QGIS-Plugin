@@ -81,7 +81,7 @@ class TheMapCloudWebServices:
         # self.toolbar = self.iface.addToolBar(u'TheMapCloudWebServices')
         # self.toolbar.setObjectName(u'TheMapCloudWebServices')
 
-        # Variable for layers_wms and about/info
+        # Variable for layers and about/info
         self.layers_wms = None
         self.layers_wmts = None
         self.about = None
@@ -163,7 +163,7 @@ class TheMapCloudWebServices:
         # hookup TW logo connection to website
         self.dock.ui.twLogoLabel.mousePressEvent = self.tw_logo_clicked
 
-        # Hookup 'Load layers_wms' buttons to mc_auth function
+        # Hookup 'Load layers' buttons to mc_auth function
         self.dock.ui.loadLayersWmsButton.pressed.connect(self.token)
         self.dock.ui.loadLayersWmtsButton.pressed.connect(self.token)
 
@@ -177,7 +177,7 @@ class TheMapCloudWebServices:
         if not self.mc_auth.username:
             self.mc_auth.prompt_login()
 
-        # If mc_auth is good then change connections and load layers_wms
+        # If mc_auth is good then change connections and load layers
         if self.mc_auth.username:
             self.load_layers()
             self.populate_about()
@@ -219,10 +219,10 @@ class TheMapCloudWebServices:
 
     def load_layers(self):
         """
-        Load layers_wms and populate treeviews
+        Load layers and populate treeviews
         :return:
         """
-        # Get layers_wms from ws and populate tree
+        # Get layers from ws and populate tree
         if self.layers_wms is None:
             self.request_get_capabilities(self.mc_auth.username, self.mc_auth.password)
 

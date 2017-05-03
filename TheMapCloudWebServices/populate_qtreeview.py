@@ -33,7 +33,7 @@ class PopulateTree:
         grey_cat.setText("Greyscale")
         self.sourceModel.setItem(1, 0, grey_cat)
 
-        # Add layers_wms to correct category
+        # Add layers to correct category
         for layer in layers:
             print layer
             data = layer.get('name')

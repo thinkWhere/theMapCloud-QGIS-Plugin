@@ -167,7 +167,7 @@ class GetOsmaLayers:
 
 class PreviewButton(QStyledItemDelegate):
     """
-    Custom delegate to add a push button to a
+    Custom delegate to add a push button to row.
     """
     buttonClicked = pyqtSignal(QModelIndex)
 
@@ -371,7 +371,7 @@ class PopulateTree:
         grey_cat.setText("Greyscale")
         self.sourceModel.setItem(1, 0, grey_cat)
 
-        # Add layers_wms to correct category
+        # Add layers to correct category
         for layer in layers:
             data = layer.get('name')
             title = layer.get('title')
@@ -467,7 +467,7 @@ class LeafFilterProxyModel(QSortFilterProxyModel):
 
 
 class AddToCanvas:
-    """Add layers_wms to QGIS map canvas"""
+    """Add layers to QGIS map canvas"""
 
     def __init__(self, iface, dock):
         self.iface = iface
@@ -517,7 +517,7 @@ class AddToCanvas:
                       "&layers={0}&styles=default&url={1}/maps/wms&password={2}" \
                       "&username={3}".format(layer, BASE_API_URL, password, username)
             else:
-                # Adds multiple layers_wms to canvas as single layer
+                # Adds multiple layers to canvas as single layer
                 title = self.title_and_order(data)
                 layers = []
                 styles = ""

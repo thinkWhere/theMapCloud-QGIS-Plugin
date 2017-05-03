@@ -28,7 +28,7 @@ The branding and target web service URL are parsed from a config file (plugin.cf
 
 ## Support
 
-[OSMA Web Services Wiki](http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services)
+[OSMA Web Services Wiki](http://osmahelp.themapcloud.com/)
 
 [thinkWhere Support](http://support.thinkwhere.com/)
 

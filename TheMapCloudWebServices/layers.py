@@ -1,25 +1,174 @@
 import urllib2
-import json
+import base64
 import os
+import xml.etree.ElementTree as ElmTree
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from osma_web_services_dialog import MultiWmsDialog
+from config_parser import parse_config_from_file
+from ConfigParser import  NoOptionError
 
 __author__ = 'matthew.walsh'
 
 
+def get_base_api_url():
+    """
+    Get the base API url from the plugin
+    configuration file.
+    :return: Base API URL str
+    """
+    config = parse_config_from_file()
+    url = config.get('api_url')
+    return url
+
+
+# Set the base API URL for the plugin to hit
+BASE_API_URL = get_base_api_url()
+
+
+def make_mapcloud_request(url, username, password):
+    """
+    Make a request to the MapCloud.
+    :param url: URL to request
+    :param username: MC username
+    :param password: MC password
+    :return: response content, status code
+    """
+    base64_auth = base64.b64encode('%s:%s' % (username, password))
+
+    request = urllib2.Request(url)
+    request.add_header("Authorization", "Basic %s" % base64_auth)
+    result_wms = urllib2.urlopen(request)
+    return result_wms.read(), result_wms.getcode()
+
+
 class GetOsmaLayers:
-    def get_available_layers(self, token):
-        # Get layers and return as dict
-        url = r"http://wms.locationcentre.co.uk/services/" + str(token) + r"/getlayers"
-        url_open = urllib2.urlopen(url)
-        json_obj = json.loads(url_open.read())
-        return json_obj
+
+    def get_available_layers(self, username, password):
+        """
+        Retrieve the WMS/WMTS layer details from there
+        respective GetCapabilities docs. Also extract service
+        metadata.
+        :param mc_auth:
+        :return: wms layers dict, wmts layers dict, metadata dict
+        """
+
+        base_mc_url = BASE_API_URL + '/maps'
+        wms_getcaps = '/wms?REQUEST=GetCapabilities'
+        wmts_getcaps = '/wmts/1.0.0/WMTSCapabilities.xml'
+
+        # Request WMS GetCapabilities
+        wms_url = base_mc_url + wms_getcaps
+        wms_getcaps_xml, _ = make_mapcloud_request(wms_url, username, password)
+        xml_root_wms = ElmTree.fromstring(wms_getcaps_xml)
+
+        # Extract WMS layers and metadata
+        layers_wms = self.extract_wms_layers_from_getcapabilities(xml_root_wms)
+        about_service_info = self.extract_metadata_from_getcapabilities(xml_root_wms)
+
+        # Request WMTS GetCapabilities
+        wmts_url = base_mc_url + wmts_getcaps
+        wmts_getcaps_xml, _ = make_mapcloud_request(wmts_url, username, password)
+        xml_root_wmts = ElmTree.fromstring(wmts_getcaps_xml)
+
+        # Extract WMTS layers
+        layers_wmts = self.extract_wmts_layers_from_getcapabilities(xml_root_wmts)
+        return layers_wms, layers_wmts, about_service_info
+
+    def extract_wms_layers_from_getcapabilities(self, xml_root):
+        """
+        Extract the WMS layers from the WMS
+        GetCapabilities XML.
+        :param xml_root: XML Element of GetCapabilities
+        :return: list of layer dicts
+        """
+        layers = []
+
+        all_layers = xml_root.findall('./Capability/Layer/Layer')
+        for layer in all_layers:
+
+            # Extract title and name
+            title = layer.find('./Title').text
+            name = layer.find('./Name').text
+
+            # Extract the min and max scale thresholds
+            min = None
+            max = None
+            scale_hint = layer.find('./ScaleHint')
+            if scale_hint is not None:
+                min = scale_hint.attrib.get('min')
+                max = scale_hint.attrib.get('max')
+
+            # Create layer dict entry
+            layer_metadata = {'title': title,
+                              'name': name,
+                              'min_scale': min,
+                              'max_scale': max}
+            layers.append(layer_metadata)
+
+        return layers
+
+    def extract_metadata_from_getcapabilities(self, xml_root):
+        """
+        Extract the metadata/contact info from the WMS
+        GetCapabilities XML.
+        :param xml_root: XML Element of GetCapabilities
+        :return: dict of metadata
+        """
+        service = xml_root.find('./Service')
+        contact_info = service.find('./ContactInformation')
+
+        metadata = {
+            'abstract': service.find('./Abstract').text,
+            'person': contact_info.find('./ContactPersonPrimary/ContactPerson').text,
+            'position': contact_info.find('./ContactPosition').text,
+            'org': contact_info.find('./ContactPersonPrimary/ContactOrganization').text,
+            'address': contact_info.find('./ContactAddress/Address').text,
+            'city': contact_info.find('./ContactAddress/City').text,
+            'country': contact_info.find('./ContactAddress/Country').text,
+            'postcode': contact_info.find('./ContactAddress/PostCode').text,
+            'phone': contact_info.find('./ContactVoiceTelephone').text,
+            # 'fax': contact_info.find('./ContactFacsimileTelephone').text,
+            'email': contact_info.find('./ContactElectronicMailAddress').text,
+            'access': service.find('./AccessConstraints').text
+        }
+        return metadata
+
+    def extract_wmts_layers_from_getcapabilities(self, xml_root):
+        """
+        Extract the WMTS layers from the WMTS
+        GetCapabilities XML.
+        :param xml_root: XML Element of GetCapabilities
+        :return: list of layer dicts
+        """
+        layers = []
+
+        all_layers = xml_root.findall('./{http://www.opengis.net/wmts/1.0}Contents/'
+                                      '{http://www.opengis.net/wmts/1.0}Layer')
+
+        for layer in all_layers:
+
+            # Create layer dict entry
+            title = layer.find('./{http://www.opengis.net/ows/1.1}Title').text
+            grid = layer.find('./{http://www.opengis.net/wmts/1.0}TileMatrixSetLink/'
+                              '{http://www.opengis.net/wmts/1.0}TileMatrixSet').text
+            name = layer.find('./{http://www.opengis.net/ows/1.1}Identifier').text
+
+            layer_metadata = {'title': title,
+                              'name': name,
+                              'grid': grid,
+                              'min_scale': None,
+                              'max_scale': None}
+            layers.append(layer_metadata)
+
+        return layers
 
 
 class PreviewButton(QStyledItemDelegate):
-    """Custom delegate to add a push button to a row"""
+    """
+    Custom delegate to add a push button to row.
+    """
     buttonClicked = pyqtSignal(QModelIndex)
 
     def __init__(self, sourcemodel, proxymodel, iface, parent=None):
@@ -144,14 +293,14 @@ class PreviewDialog(QDialog):
 class PopulateTree:
     """Deals with populating and searching the WMS/WMTS tree views"""
 
-    def __init__(self, dock, iface, token, wms):
+    def __init__(self, dock, iface, mc_auth, wms):
         # local class reference
         self.wms = wms
         self.dock = dock
         self.iface = iface
         # Create single instance of AddToCanvas so number increment works
         self.add_layer = AddToCanvas(self.iface, self.dock)
-        self.token = token
+        self.mc_auth = mc_auth
 
         if self.wms:
             self.treeview = self.dock.wmsTreeView
@@ -204,12 +353,13 @@ class PopulateTree:
                     all_data = (each_index.data(), zero_index_data)
                     data.append(all_data)
 
-        token = self.token.token
+        username = self.mc_auth.username
+        password = self.mc_auth.password
 
         if self.wms:
-            self.add_layer.add_wms(data, token)
+            self.add_layer.add_wms(data, username, password)
         else:
-            self.add_layer.add_wmts(data, token)
+            self.add_layer.add_wmts(data, username, password)
 
     def add_layers(self, layers):
 
@@ -262,10 +412,10 @@ class PopulateTree:
             self.treeview.showColumn(1)
             self.treeview.setColumnWidth(0, 210)
             self.treeview.setColumnWidth(1, 80)
-            QSettings().setValue("OsmaWebServices/Preview", "True")
+            QSettings().setValue("TheMapCloudWebServices/Preview", "True")
         else:
             self.treeview.hideColumn(1)
-            QSettings().setValue("OsmaWebServices/Preview", "False")
+            QSettings().setValue("TheMapCloudWebServices/Preview", "False")
 
     def clear_tree(self):
         pass
@@ -341,7 +491,6 @@ class AddToCanvas:
         # Opens dlg for user to input layer name, creates generic if not provided
         self.order_layers.ui.layerOrderListWidget.clear()
         for d in data:
-            print d
             item = QListWidgetItem()
             item.setText(d[0])
             item.setData(Qt.UserRole, d[1])
@@ -351,10 +500,10 @@ class AddToCanvas:
             return self.layer_n
         else:
             self.multi_l_count += 1
-            title = "MultipleWMSLayer_" + str(self.multi_l_count)
+            title = "MultiWMSLayer_" + str(self.multi_l_count)
             return title
 
-    def add_wms(self, data, token):
+    def add_wms(self, data, username, password):
         self.reset()
         # Add wms layer to map canvas
         if data:
@@ -364,8 +513,9 @@ class AddToCanvas:
                 layer = str(data[0][1])
                 if "grey" in layer.lower():
                     title += "Greyscale"
-                url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers=" + layer + \
-                      "&styles=&url=http://wms.locationcentre.co.uk/services/" + token + "/service?"
+                url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png" \
+                      "&layers={0}&styles=default&url={1}/maps/wms&password={2}" \
+                      "&username={3}".format(layer, BASE_API_URL, password, username)
             else:
                 # Adds multiple layers to canvas as single layer
                 title = self.title_and_order(data)
@@ -378,24 +528,26 @@ class AddToCanvas:
                     layers.append(layer)
                     styles += "&styles="
                 layers_clean = "".join(layers)[:-8]
-                url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers=" + layers_clean + \
-                      styles + "&url=http://wms.locationcentre.co.uk/services/" + token + "/service?"
+                url = "contextualWMSLegend=0&crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png" \
+                      "&layers={0}{1}&url={2}/maps/wms&password={3}" \
+                      "&username={4}".format(layers_clean, styles, BASE_API_URL, password, username)
             self.iface.addRasterLayer(url, title, "wms")
             self.zoom_to_extent()
 
-    def add_wmts(self, data, token):
+    def add_wmts(self, data, username, password):
         # Add wmts layer to canvas
         self.reset()
         for layer_t in data:
             title = str(layer_t[0])
             layer = str(layer_t[1][0])
             grid = str(layer_t[1][1])
+
             if "grey" in layer.lower():
                 title += " Greyscale"
-            url = r"crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers=" + layer + \
-                  r"&styles=default&tileMatrixSet=" + grid + "&url=http://wms.locationcentre.co.uk/services/" + \
-                  token + r"/wmts/1.0.0/WMTSCapabilities.xml"
-            print url
+            url = r"crs=EPSG:27700&dpiMode=7&featureCount=10&format=image/png&layers={0}&" \
+                  r"styles=default&tileMatrixSet={4}&url={1}/maps/wmts/1.0.0/WMTSCapabilities.xml&" \
+                  r"password={2}&username={3}".format(layer, BASE_API_URL, password, username, grid)
+
             self.iface.addRasterLayer(url, title, "wms")
         self.zoom_to_extent()
 

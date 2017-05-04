@@ -54,11 +54,10 @@ class Ui_TokenDialog(object):
         QtCore.QMetaObject.connectSlotsByName(TokenDialog)
 
     def retranslateUi(self, TokenDialog):
-        TokenDialog.setWindowTitle(_translate("TokenDialog", "OSMA Token", None))
-        self.tokenLabel.setText(_translate("TokenDialog", "Please enter OSMA organisation token:", None))
+        TokenDialog.setWindowTitle(_translate("TokenDialog", "OSMA MapCloudAuthentication", None))
+        self.tokenLabel.setText(_translate("TokenDialog", "Please enter OSMA organisation mc_auth:", None))
         self.goTokenButton.setText(_translate("TokenDialog", "Go", None))
 
-import resources_rc
 
 if __name__ == "__main__":
     import sys

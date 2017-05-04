@@ -7,10 +7,10 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=OSMA Web Services
+name=theMapCloudWebServices
 qgisMinimumVersion=2.8
 description=Easily add OSMA WMS and WMTS layers to QGIS
-version=0.1
+version=0.2
 author=thinkWhere
 email=support@thinkwhere.com
 
@@ -19,7 +19,7 @@ email=support@thinkwhere.com
 # Optional items:
 
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog=Updated to use theMapCloud web services (HTTP Basic Auth)
 
 # Tags are comma separated with spaces allowed
 tags=wms, wmts, osma, scotland, thinkwhere
@@ -27,7 +27,7 @@ tags=wms, wmts, osma, scotland, thinkwhere
 category=Web
 homepage=http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services
 tracker=
-repository=
+repository=https://github.com/thinkWhere/theMapCloud-QGIS-Plugin
 icon=icon.png
 # experimental flag
 experimental=False

@@ -70,7 +70,6 @@ class Ui_MultiWmsDialog(object):
         self.label_2.setText(_translate("MultiWmsDialog", "Display Name (optional): ", None))
         self.label.setText(_translate("MultiWmsDialog", "Adjust the order in which the layers are displayed (drag and drop)", None))
 
-import resources_rc
 
 if __name__ == "__main__":
     import sys

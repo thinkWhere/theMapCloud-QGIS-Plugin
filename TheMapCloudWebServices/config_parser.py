@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 from os import path
 
 
@@ -8,7 +8,7 @@ def parse_config_from_file():
     file.
     :return: dict of config
     """
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     dir_path = path.dirname(path.realpath(__file__))
     config.read(path.join(dir_path, 'plugin.cfg'))
     name = config.get('plugin_configuration', 'name')

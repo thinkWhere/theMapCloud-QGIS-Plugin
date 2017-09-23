@@ -1,5 +1,6 @@
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from PyQt5.QtWidgets import QAbstractItemView
+from PyQt5.QtCore import Qt, QSortFilterProxyModel
 
 __author__ = 'matthew.walsh'
 
@@ -35,7 +36,7 @@ class PopulateTree:
 
         # Add layers to correct category
         for layer in layers:
-            print layer
+            print(layer)
             data = layer.get('name')
             title = layer.get('title')
             new_item = QStandardItem()
@@ -99,7 +100,7 @@ class LeafFilterProxyModel(QSortFilterProxyModel):
         model = self.sourceModel()
         source_index = model.index(row_num, 0, parent)
         children_count = model.rowCount(source_index)
-        for i in xrange(children_count):
+        for i in range(children_count):
             if self.filterAcceptsRow(i, source_index):
                 return True
         return False

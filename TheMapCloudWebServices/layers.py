@@ -1,13 +1,14 @@
-import urllib2
 import base64
 import os
 import xml.etree.ElementTree as ElmTree
-
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
-from osma_web_services_dialog import MultiWmsDialog
-from config_parser import parse_config_from_file
-from ConfigParser import  NoOptionError
+from PyQt5.QtGui import QStandardItemModel, QPixmap, QStandardItem
+from PyQt5.QtCore import Qt, QEvent, pyqtSignal, QModelIndex, QRect, QSettings, QSortFilterProxyModel
+from PyQt5.QtWidgets import QAbstractItemView, QApplication, QDesktopWidget, QDialog, QGraphicsScene, QGraphicsView, \
+    QListWidgetItem, QStyle, QStyledItemDelegate, QStyleOptionButton
+from urllib.request import Request, urlopen
+from .osma_web_services_dialog import MultiWmsDialog
+from .config_parser import parse_config_from_file
+# from configparser import  NoOptionError
 
 __author__ = 'matthew.walsh'
 
@@ -37,9 +38,9 @@ def make_mapcloud_request(url, username, password):
     """
     base64_auth = base64.b64encode('%s:%s' % (username, password))
 
-    request = urllib2.Request(url)
+    request = Request(url)
     request.add_header("Authorization", "Basic %s" % base64_auth)
-    result_wms = urllib2.urlopen(request)
+    result_wms = urlopen(request)
     return result_wms.read(), result_wms.getcode()
 
 
@@ -50,7 +51,8 @@ class GetOsmaLayers:
         Retrieve the WMS/WMTS layer details from there
         respective GetCapabilities docs. Also extract service
         metadata.
-        :param mc_auth:
+        :param username:
+        :param password:
         :return: wms layers dict, wmts layers dict, metadata dict
         """
 
@@ -93,18 +95,18 @@ class GetOsmaLayers:
             name = layer.find('./Name').text
 
             # Extract the min and max scale thresholds
-            min = None
-            max = None
+            min_scale = None
+            max_scale = None
             scale_hint = layer.find('./ScaleHint')
             if scale_hint is not None:
-                min = scale_hint.attrib.get('min')
-                max = scale_hint.attrib.get('max')
+                min_scale = scale_hint.attrib.get('min')
+                max_scale = scale_hint.attrib.get('max')
 
             # Create layer dict entry
             layer_metadata = {'title': title,
                               'name': name,
-                              'min_scale': min,
-                              'max_scale': max}
+                              'min_scale': min_scale,
+                              'max_scale': max_scale}
             layers.append(layer_metadata)
 
         return layers
@@ -460,7 +462,7 @@ class LeafFilterProxyModel(QSortFilterProxyModel):
         model = self.sourceModel()
         source_index = model.index(row_num, 0, parent)
         children_count = model.rowCount(source_index)
-        for i in xrange(children_count):
+        for i in range(children_count):
             if self.filterAcceptsRow(i, source_index):
                 return True
         return False
@@ -482,7 +484,7 @@ class AddToCanvas:
         # Store user input title for multi wms
         self.layer_n = self.order_layers.ui.displayNameLineEdit.text()
         layer_list_widget = self.order_layers.ui.layerOrderListWidget
-        for index in xrange(layer_list_widget.count()):
+        for index in range(layer_list_widget.count()):
             self.layers_ordered.append(
                 (layer_list_widget.item(index).text(), layer_list_widget.item(index).data(Qt.UserRole)))
         self.order_layers.close()

@@ -6,11 +6,11 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 from ..config_parser import parse_config_from_file
 
 try:
-    _fromUtf8 = QtCore.QString.fromUtf8
+    _fromUtf8 = str.fromUtf8
 except AttributeError:
     def _fromUtf8(s):
         return s

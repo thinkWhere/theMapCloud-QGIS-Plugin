@@ -22,13 +22,14 @@
 import os.path
 import webbrowser
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from osma_web_services_dialog import OsmaWebServicesDock
-from layers import PopulateTree, GetOsmaLayers
-from mapcloud_authentication import MapCloudAuthentication
-from config_parser import parse_config_from_file
-from ConfigParser import NoOptionError
+from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QObject
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMessageBox, QAction
+from .osma_web_services_dialog import OsmaWebServicesDock
+from .layers import PopulateTree, GetOsmaLayers
+from .mapcloud_authentication import MapCloudAuthentication
+from .config_parser import parse_config_from_file
+from configparser import NoOptionError
 
 
 __author__ = 'matthew.walsh'
@@ -48,7 +49,7 @@ class TheMapCloudWebServices:
         try:
             self.plugin_config = parse_config_from_file()
         except NoOptionError:
-            print "invalid config file!"
+            print("invalid config file!")
             QMessageBox.information(self.iface.mainWindow(),
                                     "Configuration failure",
                                     "Plugin config file is invalid")
@@ -135,7 +136,7 @@ class TheMapCloudWebServices:
 
         return action
 
-    def initGui(self):
+    def init_gui(self):
         """
         Create the menu entries and toolbar icons inside the QGIS GUI.
         """

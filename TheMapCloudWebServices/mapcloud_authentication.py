@@ -1,9 +1,9 @@
-from urllib2 import HTTPError, URLError
-from PyQt4.QtCore import QSettings
-from PyQt4.QtGui import QMessageBox
+from urllib.error import HTTPError, URLError
+from PyQt5.QtCore import QSettings
+from PyQt5.QtWidgets import QMessageBox
 
-from osma_web_services_dialog import MapcloudAuthDialog
-from layers import BASE_API_URL, make_mapcloud_request
+from .osma_web_services_dialog import MapcloudAuthDialog
+from .layers import BASE_API_URL, make_mapcloud_request
 
 __author__ = 'matthew.walsh'
 
@@ -53,18 +53,18 @@ class MapCloudAuthentication:
 
         except TypeError:
             # Raise TypeError for no mc_auth present and http for 404
-            print "No auth credentials found in registry"
+            print("No auth credentials found in registry")
             return False
 
-        except HTTPError, err:
+        except HTTPError as err:
             if err.code == 401:
-                print "Authentication failed - invalid auth credentials"
+                print("Authentication failed - invalid auth credentials")
             else:
-                print "HTTP error code: " + str(err.code)
+                print("HTTP error code: " + str(err.code))
             return False
 
-        except URLError, err:
-            print err
+        except URLError as err:
+            print(err)
 
     def prompt_login(self):
         """

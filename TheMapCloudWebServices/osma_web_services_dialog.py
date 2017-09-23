@@ -20,7 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 
 from TheMapCloudWebServices.ui.multi_wms_order import Ui_MultiWmsDialog
 from TheMapCloudWebServices.ui.osma_web_services_dock import Ui_OsmaDockWidget
@@ -30,36 +30,36 @@ from TheMapCloudWebServices.ui.wms_layer_name import Ui_layerNameDialog
 __author__ = 'matthew.walsh'
 
 
-class OsmaWebServicesDock(QtGui.QDockWidget, Ui_OsmaDockWidget):
+class OsmaWebServicesDock(QtWidgets.QDockWidget, Ui_OsmaDockWidget):
     # Main dock widget
     def __init__(self):
-        QtGui.QDockWidget.__init__(self)
+        QtWidgets.QDockWidget.__init__(self)
         self.ui = Ui_OsmaDockWidget()
         self.ui.setupUi(self)
 
 
-class LayerNameDialog(QtGui.QDialog, Ui_layerNameDialog):
+class LayerNameDialog(QtWidgets.QDialog, Ui_layerNameDialog):
     # WMS layer name dialog
     def __init__(self):
-        QtGui.QDialog.__init__(self)
+        QtWidgets.QDialog.__init__(self)
         self.ui = Ui_layerNameDialog()
         self.ui.setupUi(self)
 
 
-class MapcloudAuthDialog(QtGui.QDialog, Ui_AuthDialog):
+class MapcloudAuthDialog(QtWidgets.QDialog, Ui_AuthDialog):
     """
     Dialog for user to enter MapCloud credentials
     """
 
     def __init__(self):
-        QtGui.QDialog.__init__(self)
+        QtWidgets.QDialog.__init__(self)
         self.ui = Ui_AuthDialog()
         self.ui.setupUi(self)
 
 
-class MultiWmsDialog(QtGui.QDialog, Ui_MultiWmsDialog):
+class MultiWmsDialog(QtWidgets.QDialog, Ui_MultiWmsDialog):
     # Dialog for user to enter osma mc_auth
     def __init__(self):
-        QtGui.QDialog.__init__(self)
+        QtWidgets.QDialog.__init__(self)
         self.ui = Ui_MultiWmsDialog()
         self.ui.setupUi(self)

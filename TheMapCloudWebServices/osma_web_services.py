@@ -22,7 +22,7 @@
 import os.path
 import webbrowser
 
-from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QObject
+from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox, QAction
 from .osma_web_services_dialog import OsmaWebServicesDock
@@ -153,12 +153,12 @@ class TheMapCloudWebServices:
 
         # Adds 'OSMA Wiki' to the menu
         self.wiki_btn = QAction("Help Wiki", self.iface.mainWindow())
-        QObject.connect(self.wiki_btn, SIGNAL("triggered()"), self.wiki_clicked)
+        self.wiki_btn.connect(self.wiki_clicked)
         self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.wiki_btn)
 
         # Adds 'Reset plugin' to the menu
         self.reset_btn = QAction("Reset Plugin", self.iface.mainWindow())
-        QObject.connect(self.reset_btn, SIGNAL("triggered()"), self.clear_token)
+        self.reset_btn.connect(self.clear_token)
         self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.reset_btn)
 
         # hookup TW logo connection to website
@@ -213,7 +213,7 @@ class TheMapCloudWebServices:
         # Open wiki in web browser
         webbrowser.open(self.plugin_config.get('help_url'))
 
-    def request_get_capabilities(self, username, password):
+    def request_get_capabilities(self):
         # Hit the GetCapabilities
         self.layers_wms, self.layers_wmts, self.about = self.hit_osma.get_available_layers(self.mc_auth.username,
                                                                                            self.mc_auth.password)
@@ -225,7 +225,7 @@ class TheMapCloudWebServices:
         """
         # Get layers from ws and populate tree
         if self.layers_wms is None:
-            self.request_get_capabilities(self.mc_auth.username, self.mc_auth.password)
+            self.request_get_capabilities()
 
         self.pop_wmts.add_layers(self.layers_wmts)
         self.pop_wms.add_layers(self.layers_wms)
@@ -233,7 +233,7 @@ class TheMapCloudWebServices:
     def populate_about(self):
         # Populate the 'about' tab with info from the GetCapabilities
         if self.about is None:
-            self.request_get_capabilities(self.mc_auth.username, self.mc_auth.password)
+            self.request_get_capabilities()
 
         self.dock.ui.abstractLabel.setText(self.about.get('abstract'))
         self.dock.ui.emailLabel.setText("email: " + self.about.get('email'))

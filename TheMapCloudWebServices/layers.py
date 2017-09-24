@@ -275,8 +275,8 @@ class PreviewDialog(QDialog):
         g_view.setGeometry(desktop)
 
         # Disable scroll bars
-        g_view.setHorizontalScrollBarPolicy(1)
-        g_view.setVerticalScrollBarPolicy(1)
+        g_view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        g_view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # Create and set graphics scene
         scn = QGraphicsScene(g_view)  # TODO: image should not have the same transparency a background of dlg

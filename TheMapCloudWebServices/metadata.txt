@@ -8,7 +8,7 @@
 
 [general]
 name=theMapCloudWebServices
-qgisMinimumVersion=3.0
+qgisMinimumVersion=2.99
 description=Easily add OSMA WMS and WMTS layers to QGIS
 version=1.0
 author=thinkWhere

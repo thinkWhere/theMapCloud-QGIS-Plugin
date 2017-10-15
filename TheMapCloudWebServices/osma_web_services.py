@@ -136,7 +136,7 @@ class TheMapCloudWebServices:
 
         return action
 
-    def init_gui(self):
+    def initGui(self):
         """
         Create the menu entries and toolbar icons inside the QGIS GUI.
         """
@@ -153,12 +153,12 @@ class TheMapCloudWebServices:
 
         # Adds 'OSMA Wiki' to the menu
         self.wiki_btn = QAction("Help Wiki", self.iface.mainWindow())
-        self.wiki_btn.connect(self.wiki_clicked)
+        self.wiki_btn.triggered.connect(self.wiki_clicked)
         self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.wiki_btn)
 
         # Adds 'Reset plugin' to the menu
         self.reset_btn = QAction("Reset Plugin", self.iface.mainWindow())
-        self.reset_btn.connect(self.clear_token)
+        self.reset_btn.triggered.connect(self.clear_token)
         self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.reset_btn)
 
         # hookup TW logo connection to website

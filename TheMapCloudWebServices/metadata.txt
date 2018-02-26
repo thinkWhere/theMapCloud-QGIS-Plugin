@@ -7,8 +7,9 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=theMapCloudWebServices
+name=OSMA Web Services
 qgisMinimumVersion=2.99
+qgisMaximumVersion=3.90
 description=Easily add OSMA WMS and WMTS layers to QGIS
 about=Provides access to WMS and WMTS layers from thinkWhere's theMapCloud platform.
     Map layers are available to users with a MapCloud account and appropriate license 
@@ -33,7 +34,7 @@ category=Web
 homepage=http://osmahelp.themapcloud.com
 tracker=
 repository=https://github.com/thinkWhere/theMapCloud-QGIS-Plugin
-icon=icon.png
+icon=resources/icon.png
 # experimental flag
 experimental=False
 

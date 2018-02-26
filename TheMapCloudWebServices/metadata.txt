@@ -10,8 +10,11 @@
 name=theMapCloudWebServices
 qgisMinimumVersion=2.99
 description=Easily add OSMA WMS and WMTS layers to QGIS
-version=1.0
-author=thinkWhere
+about=Provides access to WMS and WMTS layers from thinkWhere's theMapCloud platform.
+    Map layers are available to users with a MapCloud account and appropriate license 
+	agreements in place.
+version=2.0
+author=thinkWhere Ltd
 email=support@thinkwhere.com
 
 # End of mandatory metadata
@@ -19,13 +22,15 @@ email=support@thinkwhere.com
 # Optional items:
 
 # Uncomment the following line and add your changelog:
-changelog=Updated to use theMapCloud web services (HTTP Basic Auth)
+changelog=Changes as listed below
+    2.0 - Version compatible with QGIS 3
+    Updated to use theMapCloud web services (HTTP Basic Auth)
 
 # Tags are comma separated with spaces allowed
 tags=wms, wmts, osma, scotland, thinkwhere
 
 category=Web
-homepage=http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services
+homepage=http://osmahelp.themapcloud.com
 tracker=
 repository=https://github.com/thinkWhere/theMapCloud-QGIS-Plugin
 icon=icon.png

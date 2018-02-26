@@ -2,51 +2,36 @@
 
 # Form implementation generated from reading ui file 'token_dialog.ui'
 #
-# Created: Tue Mar 24 16:08:53 2015
-#      by: PyQt4 UI code generator 4.11.3
+# Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_TokenDialog(object):
     def setupUi(self, TokenDialog):
-        TokenDialog.setObjectName(_fromUtf8("TokenDialog"))
+        TokenDialog.setObjectName("TokenDialog")
         TokenDialog.resize(324, 78)
-        self.gridLayout = QtGui.QGridLayout(TokenDialog)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.tokenHorizontalLayout = QtGui.QHBoxLayout()
-        self.tokenHorizontalLayout.setObjectName(_fromUtf8("tokenHorizontalLayout"))
-        self.tokenLabel = QtGui.QLabel(TokenDialog)
-        self.tokenLabel.setObjectName(_fromUtf8("tokenLabel"))
+        self.gridLayout = QtWidgets.QGridLayout(TokenDialog)
+        self.gridLayout.setObjectName("gridLayout")
+        self.tokenHorizontalLayout = QtWidgets.QHBoxLayout()
+        self.tokenHorizontalLayout.setObjectName("tokenHorizontalLayout")
+        self.tokenLabel = QtWidgets.QLabel(TokenDialog)
+        self.tokenLabel.setObjectName("tokenLabel")
         self.tokenHorizontalLayout.addWidget(self.tokenLabel)
-        self.tokenLineEdit = QtGui.QLineEdit(TokenDialog)
-        self.tokenLineEdit.setObjectName(_fromUtf8("tokenLineEdit"))
+        self.tokenLineEdit = QtWidgets.QLineEdit(TokenDialog)
+        self.tokenLineEdit.setObjectName("tokenLineEdit")
         self.tokenHorizontalLayout.addWidget(self.tokenLineEdit)
         self.gridLayout.addLayout(self.tokenHorizontalLayout, 2, 0, 1, 1)
-        self.goBtnHorizontalLayout = QtGui.QHBoxLayout()
-        self.goBtnHorizontalLayout.setObjectName(_fromUtf8("goBtnHorizontalLayout"))
-        self.goTokenButton = QtGui.QPushButton(TokenDialog)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.goBtnHorizontalLayout = QtWidgets.QHBoxLayout()
+        self.goBtnHorizontalLayout.setObjectName("goBtnHorizontalLayout")
+        self.goTokenButton = QtWidgets.QPushButton(TokenDialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.goTokenButton.sizePolicy().hasHeightForWidth())
         self.goTokenButton.setSizePolicy(sizePolicy)
-        self.goTokenButton.setObjectName(_fromUtf8("goTokenButton"))
+        self.goTokenButton.setObjectName("goTokenButton")
         self.goBtnHorizontalLayout.addWidget(self.goTokenButton)
         self.gridLayout.addLayout(self.goBtnHorizontalLayout, 3, 0, 1, 1)
 
@@ -54,17 +39,9 @@ class Ui_TokenDialog(object):
         QtCore.QMetaObject.connectSlotsByName(TokenDialog)
 
     def retranslateUi(self, TokenDialog):
-        TokenDialog.setWindowTitle(_translate("TokenDialog", "OSMA MapCloudAuthentication", None))
-        self.tokenLabel.setText(_translate("TokenDialog", "Please enter OSMA organisation mc_auth:", None))
-        self.goTokenButton.setText(_translate("TokenDialog", "Go", None))
+        _translate = QtCore.QCoreApplication.translate
+        TokenDialog.setWindowTitle(_translate("TokenDialog", "OSMA Token"))
+        self.tokenLabel.setText(_translate("TokenDialog", "Please enter OSMA organisation token:"))
+        self.goTokenButton.setText(_translate("TokenDialog", "Go"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    TokenDialog = QtGui.QDialog()
-    ui = Ui_TokenDialog()
-    ui.setupUi(TokenDialog)
-    TokenDialog.show()
-    sys.exit(app.exec_())
-
+# import resources_rc

@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ElmTree
 from PyQt5.QtGui import QStandardItemModel, QPixmap, QStandardItem
 from PyQt5.QtCore import Qt, QEvent, pyqtSignal, QModelIndex, QRect, QSettings, QSortFilterProxyModel
 from PyQt5.QtWidgets import QAbstractItemView, QApplication, QDesktopWidget, QDialog, QGraphicsScene, QGraphicsView, \
-    QListWidgetItem, QStyle, QStyledItemDelegate, QStyleOptionButton
+    QListWidgetItem, QStyle, QStyledItemDelegate, QStyleOptionButton, QMessageBox
 from urllib.request import Request, urlopen
 from .osma_web_services_dialog import MultiWmsDialog
 from .config_parser import parse_config_from_file
@@ -36,12 +36,13 @@ def make_mapcloud_request(url, username, password):
     :param password: MC password
     :return: response content, status code
     """
-    base64_auth = base64.b64encode('%s:%s' % (username, password))
+    auth_bytes = str.encode('{}:{}'.format(username, password))
+    base64_auth = base64.b64encode(auth_bytes)
 
     request = Request(url)
-    request.add_header("Authorization", "Basic %s" % base64_auth)
+    request.add_header("Authorization", "Basic %s" % base64_auth.decode('ascii'))
     result_wms = urlopen(request)
-    return result_wms.read(), result_wms.getcode()
+    return result_wms.read().decode('utf-8'), result_wms.getcode()
 
 
 class GetOsmaLayers:

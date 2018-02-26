@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Colin\work\projects\theMapCloud-QGIS-Plugin\TheMapCloudWebServices\ui\auth_dialog.ui'
+# Form implementation generated from reading ui file 'theMapCloud-QGIS-Plugin\TheMapCloudWebServices\ui\auth_dialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_AuthDialog(object):
     def setupUi(self, AuthDialog):

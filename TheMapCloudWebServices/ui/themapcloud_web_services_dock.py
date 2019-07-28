@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'osma_web_services_dock.ui'
+# Form implementation generated from reading ui file 'themapcloud_web_services_dock.ui'
 #
 # Created: Tue Mar 24 16:08:53 2015
 #      by: PyQt4 UI code generator 4.11.3

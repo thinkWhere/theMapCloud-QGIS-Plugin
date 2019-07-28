@@ -26,6 +26,7 @@ email=support@thinkwhere.com
 changelog=Changes as listed below
     2.0 - Version compatible with QGIS 3
     Updated to use theMapCloud web services (HTTP Basic Auth)
+    2.1 - Updated branding on plugin
 
 # Tags are comma separated with spaces allowed
 tags=wms, wmts, scotland, thinkwhere, theMapCloud

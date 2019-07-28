@@ -10,7 +10,7 @@ Features:
 - Preview layers
 - Search layers
 
-This plugin is intended for use by members of the [One Scotland Mapping Agreement](https://www.ordnancesurvey.co.uk/business-and-government/public-sector/mapping-agreements/one-scotland-mapping-agreement.html). The use of this plugin is restricted by token authentication. 
+This plugin is intended for use by consumers and customers of theMapCloud. The use of this plugin is restricted by token authentication. 
 
 ## Installing the plugin
 
@@ -28,9 +28,6 @@ The branding and target web service URL are parsed from a config file (plugin.cf
 
 ## Support
 
-[OSMA Web Services Wiki](http://osmahelp.themapcloud.com/)
+[theMapCloud API](https://api.themapcloud.com/)
 
-[thinkWhere Support](http://support.thinkwhere.com/)
-
-
-
+[thinkWhere Support](https://support.thinkwhere.com/)

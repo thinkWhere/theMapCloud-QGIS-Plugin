@@ -1,7 +1,7 @@
 # This file contains metadata for your plugin. Since 
 # version 2.0 of QGIS this is the proper way to supply 
 # information about a plugin. The old method of 
-# embedding metadata in __init__.py will 
+# embedding metadata in __init__.py
 # is no longer supported since version 2.0.
 
 # This file should be included when you package your plugin.# Mandatory items:
@@ -10,8 +10,8 @@
 name=theMapCloudWebServices
 qgisMinimumVersion=2.8
 qgisMaximumVersion=2.90
-description=Easily add OSMA WMS and WMTS layers to QGIS
-version=0.2
+description=Easily add theMapCloud WMS and WMTS layers to QGIS
+version=0.3
 author=thinkWhere
 email=support@thinkwhere.com
 
@@ -23,10 +23,10 @@ email=support@thinkwhere.com
 changelog=Updated to use theMapCloud web services (HTTP Basic Auth)
 
 # Tags are comma separated with spaces allowed
-tags=wms, wmts, osma, scotland, thinkwhere
+tags=wms, wmts, scotland, thinkwhere, themapcloud
 
 category=Web
-homepage=http://wms.locationcentre.co.uk/wiki/index.php/OSMA_Web_Services
+homepage=https://api.themapcloud.com
 tracker=
 repository=https://github.com/thinkWhere/theMapCloud-QGIS-Plugin
 icon=icon.png

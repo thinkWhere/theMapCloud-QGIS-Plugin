@@ -2,7 +2,7 @@ from urllib.error import HTTPError, URLError
 from PyQt5.QtCore import QSettings
 from PyQt5.QtWidgets import QMessageBox
 
-from .osma_web_services_dialog import MapcloudAuthDialog
+from .themapcloud_web_services_dialog import MapcloudAuthDialog
 from .layers import BASE_API_URL, make_mapcloud_request
 
 __author__ = 'matthew.walsh'

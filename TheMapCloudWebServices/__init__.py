@@ -3,7 +3,7 @@
 /***************************************************************************
  TheMapCloudWebServices
                                  A QGIS plugin
- Easy add OSMA WMS and WMTS layers to QGIS
+ Easy add theMapCloud WMS and WMTS layers to QGIS
                              -------------------
         begin                : 2014-11-10
         copyright            : (C) 2014 by thinkWhere
@@ -31,5 +31,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :type iface: QgsInterface
     """
     #
-    from .osma_web_services import TheMapCloudWebServices
+    from .themapcloud_web_services import TheMapCloudWebServices
     return TheMapCloudWebServices(iface)

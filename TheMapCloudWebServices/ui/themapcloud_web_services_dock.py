@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'osma_web_services_dock.ui'
+# Form implementation generated from reading ui file 'themapcloud_web_services_dock.ui'
 #
 # Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from ..config_parser import parse_config_from_file
 
 
 class Ui_OsmaDockWidget(object):
     def setupUi(self, OsmaDockWidget):
+        self.config = parse_config_from_file()
+
         OsmaDockWidget.setObjectName("OsmaDockWidget")
         OsmaDockWidget.resize(304, 653)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -134,7 +137,7 @@ class Ui_OsmaDockWidget(object):
         self.twLogoLabel.setSizePolicy(sizePolicy)
         self.twLogoLabel.setMaximumSize(QtCore.QSize(10777215, 10777215))
         self.twLogoLabel.setText("")
-        self.twLogoLabel.setPixmap(QtGui.QPixmap(":/plugins/OsmaWebServices/thinkwhere_logo.png"))
+        self.twLogoLabel.setPixmap(QtGui.QPixmap(":/plugins/TheMapCloudWebServices/resources/thinkwhere_logo.png"))
         self.twLogoLabel.setScaledContents(False)
         self.twLogoLabel.setOpenExternalLinks(True)
         self.twLogoLabel.setObjectName("twLogoLabel")
@@ -197,7 +200,7 @@ class Ui_OsmaDockWidget(object):
 
     def retranslateUi(self, OsmaDockWidget):
         _translate = QtCore.QCoreApplication.translate
-        OsmaDockWidget.setWindowTitle(_translate("OsmaDockWidget", "OSMA Web Services"))
+        OsmaDockWidget.setWindowTitle(_translate("OsmaDockWidget", self.config.get('title')))
         self.loadLayersWmtsButton.setText(_translate("OsmaDockWidget", "Load Layers"))
         self.addWmtsButton.setText(_translate("OsmaDockWidget", "Add Selected"))
         self.zoomExtentWmtsBox.setText(_translate("OsmaDockWidget", "Zoom to extent"))
@@ -210,7 +213,7 @@ class Ui_OsmaDockWidget(object):
         self.wmsSearchLineEdit.setToolTip(_translate("OsmaDockWidget", "Search WMS Layers"))
         self.wmsSearchLineEdit.setPlaceholderText(_translate("OsmaDockWidget", "Search WMS layers..."))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.wmsTab), _translate("OsmaDockWidget", "WMS"))
-        self.titleLabel.setText(_translate("OsmaDockWidget", "Scottish Government OSMA Web Services"))
+        self.titleLabel.setText(_translate("OsmaDockWidget", self.config.get('title')))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("OsmaDockWidget", "About"))
 
 

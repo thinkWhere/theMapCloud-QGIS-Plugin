@@ -25,8 +25,8 @@ import webbrowser
 from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox, QAction
-from .osma_web_services_dialog import OsmaWebServicesDock
-from .layers import PopulateTree, GetOsmaLayers
+from .themapcloud_web_services_dialog import MapcloudWebServicesDock
+from .layers import PopulateTree, GetMapCloudLayers
 from .mapcloud_authentication import MapCloudAuthentication
 from .config_parser import parse_config_from_file
 from configparser import NoOptionError
@@ -71,7 +71,7 @@ class TheMapCloudWebServices:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dock = OsmaWebServicesDock()
+        self.dock = MapcloudWebServicesDock()
 
         # Add dock to main window
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dock)
@@ -88,7 +88,7 @@ class TheMapCloudWebServices:
         self.about = None
         self.caches = None
 
-        self.hit_osma = GetOsmaLayers()
+        self.hit_mapcloud = GetMapCloudLayers()
 
         self.mc_auth = MapCloudAuthentication(self.iface)
         self.mc_auth.validate_auth_credentials()
@@ -215,8 +215,8 @@ class TheMapCloudWebServices:
 
     def request_get_capabilities(self):
         # Hit the GetCapabilities
-        self.layers_wms, self.layers_wmts, self.about = self.hit_osma.get_available_layers(self.mc_auth.username,
-                                                                                           self.mc_auth.password)
+        self.layers_wms, self.layers_wmts, self.about = self.hit_mapcloud.get_available_layers(self.mc_auth.username,
+                                                                                               self.mc_auth.password)
 
     def load_layers(self):
         """

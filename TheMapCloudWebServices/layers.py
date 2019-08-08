@@ -6,9 +6,8 @@ from PyQt5.QtCore import Qt, QEvent, pyqtSignal, QModelIndex, QRect, QSettings, 
 from PyQt5.QtWidgets import QAbstractItemView, QApplication, QDesktopWidget, QDialog, QGraphicsScene, QGraphicsView, \
     QListWidgetItem, QStyle, QStyledItemDelegate, QStyleOptionButton, QMessageBox
 from urllib.request import Request, urlopen
-from .osma_web_services_dialog import MultiWmsDialog
+from .themapcloud_web_services_dialog import MultiWmsDialog
 from .config_parser import parse_config_from_file
-# from configparser import  NoOptionError
 
 __author__ = 'matthew.walsh'
 
@@ -45,7 +44,7 @@ def make_mapcloud_request(url, username, password):
     return result_wms.read().decode('utf-8'), result_wms.getcode()
 
 
-class GetOsmaLayers:
+class GetMapCloudLayers:
 
     def get_available_layers(self, username, password):
         """

@@ -40,8 +40,8 @@ class Ui_TokenDialog(object):
 
     def retranslateUi(self, TokenDialog):
         _translate = QtCore.QCoreApplication.translate
-        TokenDialog.setWindowTitle(_translate("TokenDialog", "OSMA Token"))
-        self.tokenLabel.setText(_translate("TokenDialog", "Please enter OSMA organisation token:"))
+        TokenDialog.setWindowTitle(_translate("TokenDialog", "theMapCloud Authentication"))
+        self.tokenLabel.setText(_translate("TokenDialog", "Please enter your organisation token:"))
         self.goTokenButton.setText(_translate("TokenDialog", "Go"))
 
 # import resources_rc

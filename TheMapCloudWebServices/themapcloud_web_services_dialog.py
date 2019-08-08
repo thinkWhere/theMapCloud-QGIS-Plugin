@@ -3,7 +3,7 @@
 /***************************************************************************
  OsmaWebServicesDialog
                                  A QGIS plugin
- Easy add OSMA WMS and WMTS layers to QGIS
+ Easy add theMapCloud WMS and WMTS layers to QGIS
                              -------------------
         begin                : 2014-11-10
         git sha              : $Format:%H$
@@ -23,14 +23,14 @@
 from PyQt5 import QtWidgets
 
 from TheMapCloudWebServices.ui.multi_wms_order import Ui_MultiWmsDialog
-from TheMapCloudWebServices.ui.osma_web_services_dock import Ui_OsmaDockWidget
+from TheMapCloudWebServices.ui.themapcloud_web_services_dock import Ui_OsmaDockWidget
 from TheMapCloudWebServices.ui.auth_dialog import Ui_AuthDialog
 from TheMapCloudWebServices.ui.wms_layer_name import Ui_layerNameDialog
 
 __author__ = 'matthew.walsh'
 
 
-class OsmaWebServicesDock(QtWidgets.QDockWidget, Ui_OsmaDockWidget):
+class MapcloudWebServicesDock(QtWidgets.QDockWidget, Ui_OsmaDockWidget):
     # Main dock widget
     def __init__(self):
         QtWidgets.QDockWidget.__init__(self)
@@ -58,7 +58,7 @@ class MapcloudAuthDialog(QtWidgets.QDialog, Ui_AuthDialog):
 
 
 class MultiWmsDialog(QtWidgets.QDialog, Ui_MultiWmsDialog):
-    # Dialog for user to enter osma mc_auth
+    # Dialog for user to enter theMapCloud mc_auth
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
         self.ui = Ui_MultiWmsDialog()

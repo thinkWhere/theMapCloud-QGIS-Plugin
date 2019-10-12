@@ -3,7 +3,7 @@
 /***************************************************************************
  TheMapCloudWebServices
                                  A QGIS plugin
- Easy add OSMA WMS and WMTS layers to QGIS
+ Easy add theMapCloud WMS and WMTS layers to QGIS
                               -------------------
         begin                : 2014-11-10
         copyright            : (C) 2014 by thinkWhere

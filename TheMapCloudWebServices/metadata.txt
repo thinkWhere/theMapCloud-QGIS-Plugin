@@ -7,7 +7,7 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=OSMA Web Services
+name=theMapCloud Web Services
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.90
 description=Easily add theMapCloud WMS and WMTS layers to QGIS

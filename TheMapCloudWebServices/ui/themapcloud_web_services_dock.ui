@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>OSMA Web Services</string>
+   <string>theMapCloud Web Services</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
@@ -323,7 +323,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Scottish Government OSMA Web Services</string>
+           <string>theMapCloud Web Services</string>
           </property>
          </widget>
         </item>

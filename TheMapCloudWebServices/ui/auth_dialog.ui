@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>OSMA Web Services Login</string>
+   <string>theMapCloud Web Services Login</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>OSMA Token</string>
+   <string>theMapCloud Token</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
@@ -19,7 +19,7 @@
      <item>
       <widget class="QLabel" name="tokenLabel">
        <property name="text">
-        <string>Please enter OSMA organisation token:</string>
+        <string>Please enter organisation token:</string>
        </property>
       </widget>
      </item>

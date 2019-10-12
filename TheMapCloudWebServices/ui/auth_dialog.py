@@ -62,7 +62,7 @@ class Ui_AuthDialog(object):
 
     def retranslateUi(self, AuthDialog):
         _translate = QtCore.QCoreApplication.translate
-        AuthDialog.setWindowTitle(_translate("AuthDialog", "OSMA Web Services Login"))
+        AuthDialog.setWindowTitle(_translate("AuthDialog", "theMapCloud Web Services Login"))
         self.usernameLabel.setText(_translate("AuthDialog", "Username:"))
         self.passwordLabel.setText(_translate("AuthDialog", "Password:"))
         self.cancelPushButton.setText(_translate("AuthDialog", "Cancel"))

@@ -4,7 +4,8 @@
 # embedding metadata in __init__.py
 # is no longer supported since version 2.0.
 
-# This file should be included when you package your plugin.# Mandatory items:
+# This file should be included when you package your plugin.
+# Mandatory items:
 
 [general]
 name=theMapCloud Web Services
@@ -14,7 +15,7 @@ description=Easily add theMapCloud WMS and WMTS layers to QGIS
 about=Provides access to WMS and WMTS layers from thinkWhere's theMapCloud platform.
     Map layers are available to users with a MapCloud account and appropriate license 
 	agreements in place.
-version=2.2
+version=2.3
 author=thinkWhere Ltd
 email=support@thinkwhere.com
 
@@ -27,15 +28,17 @@ changelog=Changes as listed below
     2.0 - Version compatible with QGIS 3
     Updated to use theMapCloud web services (HTTP Basic Auth)
     2.2 - Updated branding on plugin
+    2.3 - Updated branding on plugin
+
 
 # Tags are comma separated with spaces allowed
-tags=wms, wmts, scotland, thinkwhere, theMapCloud
+tags=wms, wmts, data, thinkwhere, theMapCloud
 
 category=Web
 homepage=https://api.themapcloud.com
 tracker=
 repository=https://github.com/thinkWhere/theMapCloud-QGIS-Plugin
-icon=resources/icon.png
+icon=resources\icon.png
 # experimental flag
 experimental=False
 

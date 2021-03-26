@@ -18,9 +18,11 @@ The plugin can be installed from the thinkWhere QGIS repository. Navigate to the
 
 Then add a new repository with the URL:
 
-- *http://qgis.locationcentre.co.uk/plugin.xml*
+- *http://qgis.themapcloud.com/plugin.xml*
 
-Alternatively, the plugin can be installed by cloning the repository and placing it in your QGIS plugin folder (e.g. C:\Users\username\.qgis2\python\plugins on Windows)
+Alternatively, the plugin can be installed by cloning the repository and placing it in your QGIS plugin folder 
+- QGIS2 on Windows: e.g. C:\Users\USERNAME\.qgis2\python\plugins
+- QGIS3 on Windows: e.g. C:\Users\USERNAME\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins
 
 ## Configuration
 

@@ -2,18 +2,14 @@
 
 # Form implementation generated from reading ui file 'themapcloud_web_services_dock.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ..config_parser import parse_config_from_file
-
 
 class Ui_OsmaDockWidget(object):
     def setupUi(self, OsmaDockWidget):
-        self.config = parse_config_from_file()
-
         OsmaDockWidget.setObjectName("OsmaDockWidget")
         OsmaDockWidget.resize(304, 653)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -24,7 +20,6 @@ class Ui_OsmaDockWidget(object):
         self.dockWidgetContents = QtWidgets.QWidget()
         self.dockWidgetContents.setObjectName("dockWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.dockWidgetContents)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.tabWidget = QtWidgets.QTabWidget(self.dockWidgetContents)
         self.tabWidget.setElideMode(QtCore.Qt.ElideNone)
@@ -32,7 +27,6 @@ class Ui_OsmaDockWidget(object):
         self.wmtsTab = QtWidgets.QWidget()
         self.wmtsTab.setObjectName("wmtsTab")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.wmtsTab)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.loadLayersWmtsButton = QtWidgets.QPushButton(self.wmtsTab)
         self.loadLayersWmtsButton.setObjectName("loadLayersWmtsButton")
@@ -71,7 +65,6 @@ class Ui_OsmaDockWidget(object):
         self.wmsTab = QtWidgets.QWidget()
         self.wmsTab.setObjectName("wmsTab")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.wmsTab)
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.addWmsButton = QtWidgets.QPushButton(self.wmsTab)
         self.addWmsButton.setObjectName("addWmsButton")
@@ -102,7 +95,6 @@ class Ui_OsmaDockWidget(object):
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.tab)
-        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.accessLabel = QtWidgets.QLabel(self.tab)
         self.accessLabel.setText("")
@@ -137,7 +129,7 @@ class Ui_OsmaDockWidget(object):
         self.twLogoLabel.setSizePolicy(sizePolicy)
         self.twLogoLabel.setMaximumSize(QtCore.QSize(10777215, 10777215))
         self.twLogoLabel.setText("")
-        self.twLogoLabel.setPixmap(QtGui.QPixmap(":/plugins/TheMapCloudWebServices/resources/thinkwhere_logo.png"))
+        self.twLogoLabel.setPixmap(QtGui.QPixmap(":/plugins/theMapCloud/themapcloud_logo.png"))
         self.twLogoLabel.setScaledContents(False)
         self.twLogoLabel.setOpenExternalLinks(True)
         self.twLogoLabel.setObjectName("twLogoLabel")
@@ -195,12 +187,12 @@ class Ui_OsmaDockWidget(object):
         OsmaDockWidget.setWidget(self.dockWidgetContents)
 
         self.retranslateUi(OsmaDockWidget)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(OsmaDockWidget)
 
     def retranslateUi(self, OsmaDockWidget):
         _translate = QtCore.QCoreApplication.translate
-        OsmaDockWidget.setWindowTitle(_translate("OsmaDockWidget", self.config.get('title')))
+        OsmaDockWidget.setWindowTitle(_translate("OsmaDockWidget", "theMapCloud Web Services"))
         self.loadLayersWmtsButton.setText(_translate("OsmaDockWidget", "Load Layers"))
         self.addWmtsButton.setText(_translate("OsmaDockWidget", "Add Selected"))
         self.zoomExtentWmtsBox.setText(_translate("OsmaDockWidget", "Zoom to extent"))
@@ -213,9 +205,8 @@ class Ui_OsmaDockWidget(object):
         self.wmsSearchLineEdit.setToolTip(_translate("OsmaDockWidget", "Search WMS Layers"))
         self.wmsSearchLineEdit.setPlaceholderText(_translate("OsmaDockWidget", "Search WMS layers..."))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.wmsTab), _translate("OsmaDockWidget", "WMS"))
-        self.titleLabel.setText(_translate("OsmaDockWidget", self.config.get('title')))
+        self.titleLabel.setText(_translate("OsmaDockWidget", "theMapCloud Web Services"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("OsmaDockWidget", "About"))
 
 
-# import resources_rc
-
+import TheMapCloudWebServices.resources.resources

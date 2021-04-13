@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/plugins/theMapCloud">
-        <file>icon.png</file>
-        <file>thinkwhere_logo.png</file>
+        <file alias="icon.png">icon.png</file>
+        <file alias="thinkwhere_logo.png">thinkwhere_logo.png</file>
+        <file alias="themapcloud_logo.png">theMapCloud_logo.png</file>
     </qresource>
 </RCC>

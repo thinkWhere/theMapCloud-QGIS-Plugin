@@ -29,6 +29,7 @@ from .themapcloud_web_services_dialog import MapcloudWebServicesDock
 from .layers import PopulateTree, GetMapCloudLayers
 from .mapcloud_authentication import MapCloudAuthentication
 from .config_parser import parse_config_from_file
+from .resources.resources import *
 from configparser import NoOptionError
 
 
@@ -144,15 +145,15 @@ class TheMapCloudWebServices:
         self.pop_wmts.preview_column(False)
         self.pop_wms.preview_column(False)
 
-        icon_path = ':/plugins/TheMapCloudWebServices/resources/icon.png'
+        icon_path = ':/plugins/theMapCloud/icon.png'
         self.add_action(
             icon_path,
             text=self.tr(u'{}'.format(self.plugin_config.get('title'))),
             callback=self.run,
             parent=self.iface.mainWindow())
 
-        # Adds 'OSMA Wiki' to the menu
-        self.wiki_btn = QAction("Help Wiki", self.iface.mainWindow())
+        # Adds 'support link' to the menu
+        self.wiki_btn = QAction("Support", self.iface.mainWindow())
         self.wiki_btn.triggered.connect(self.wiki_clicked)
         self.iface.addPluginToWebMenu(u"{}".format(self.plugin_config.get('title')), self.wiki_btn)
 
@@ -207,7 +208,7 @@ class TheMapCloudWebServices:
 
     def tw_logo_clicked(self, mouse_event):
         # Open tw website in browsers on logo click
-        webbrowser.open('http://www.thinkwhere.com')
+        webbrowser.open('https://www.thinkwhere.com')
 
     def wiki_clicked(self):
         # Open wiki in web browser
